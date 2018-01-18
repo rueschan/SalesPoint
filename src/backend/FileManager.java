@@ -16,24 +16,29 @@ import java.util.ArrayList;
  */
 public class FileManager {
     
-    private static final String FILE_CARTA = "carta.txt";
-    private static File carta;
-    private static final String FILE_BEBIDAS = "bebidas.txt";
-    private static File bebidas;
-    private static final String FILE_MENUS = "menus.txt";
-    private static File menus;
+//    private static final String fileName = "carta.txt";
+//    private static File selected;
+//    private static final String FILE_BEBIDAS = "bebidas.txt";
+//    private static File bebidas;
+//    private static final String FILE_ANTOJOS = "antojos.txt";
+//    private static File antojos;
+//    private static final String FILE_MENUS = "menus.txt";
+//    private static File menus;
     
-    public static ArrayList<String> readCarta() {
-        carta = new File(FILE_CARTA);
+    public static ArrayList<String> readFile(FileTypes fileType) {
+        
+        String fileName = fileType.toString().toLowerCase() + ".txt";
+        File selected = new File(fileName);
+        
         ArrayList<String> salida = new ArrayList<>();
         
         try {
-            if (carta.createNewFile()) {
-                LogFileMannager.writeLog("Archivo " + FILE_CARTA + " creado con exito.");
+            if (selected.createNewFile()) {
+                LogFileMannager.writeLog("Archivo " + fileName + " creado con exito.");
             } else {
-                LogFileMannager.writeLog("Acceso a " + FILE_CARTA + ".");
+                LogFileMannager.writeLog("Acceso a " + fileName + ".");
                 
-                BufferedReader br = new BufferedReader(new FileReader(carta));
+                BufferedReader br = new BufferedReader(new FileReader(selected));
                 String line = br.readLine();
                 String[] lineItems;
                 while (line != null) {
@@ -43,7 +48,7 @@ public class FileManager {
                     line = br.readLine();
                 }
                 br.close();
-                LogFileMannager.writeLog("Datos leidos de " + FILE_CARTA + 
+                LogFileMannager.writeLog("Datos leidos de " + fileName + 
                         ":" + salida.toString());
             }
         } catch (Exception e) {
