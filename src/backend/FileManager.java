@@ -7,7 +7,9 @@ package backend;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -38,7 +40,7 @@ public class FileManager {
             } else {
                 LogFileMannager.writeLog("Acceso a " + fileName + ".");
                 
-                BufferedReader br = new BufferedReader(new FileReader(selected));
+                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "windows-1250"));
                 String line = br.readLine();
                 String[] lineItems;
                 while (line != null) {
