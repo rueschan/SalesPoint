@@ -66,7 +66,7 @@ public class MainScreen extends javax.swing.JFrame {
         Body = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         ventasPanel = new javax.swing.JPanel();
-        textArea1 = new java.awt.TextArea();
+        reciboTextArea = new java.awt.TextArea();
         btnFinalizar = new java.awt.Button();
         btnCancelar = new java.awt.Button();
         button1 = new java.awt.Button();
@@ -78,6 +78,10 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         bebidasList = new java.awt.List();
         jLabel3 = new javax.swing.JLabel();
+        waiterChoose = new java.awt.Choice();
+        extrasList = new java.awt.List();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         inventarioPanel = new javax.swing.JPanel();
         MenuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -122,14 +126,19 @@ public class MainScreen extends javax.swing.JFrame {
         ventasPanel.setBackground(new java.awt.Color(51, 51, 51));
         ventasPanel.setForeground(new java.awt.Color(102, 102, 102));
 
-        textArea1.setBackground(new java.awt.Color(204, 204, 204));
-        textArea1.setEditable(false);
-        textArea1.setMinimumSize(new java.awt.Dimension(50, 80));
+        reciboTextArea.setBackground(new java.awt.Color(204, 204, 204));
+        reciboTextArea.setEditable(false);
+        reciboTextArea.setMinimumSize(new java.awt.Dimension(50, 80));
 
         btnFinalizar.setBackground(new java.awt.Color(0, 204, 0));
         btnFinalizar.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         btnFinalizar.setLabel("Finalizar Venta");
         btnFinalizar.setMinimumSize(new java.awt.Dimension(20, 25));
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setActionCommand("Cancelar Venta");
         btnCancelar.setBackground(new java.awt.Color(204, 0, 0));
@@ -137,6 +146,11 @@ public class MainScreen extends javax.swing.JFrame {
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setLabel("Cancelar Venta");
         btnCancelar.setMinimumSize(new java.awt.Dimension(20, 25));
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         button1.setBackground(new java.awt.Color(0, 153, 204));
         button1.setFont(new java.awt.Font("Quarca Norm Light", 0, 24)); // NOI18N
@@ -154,7 +168,7 @@ public class MainScreen extends javax.swing.JFrame {
         button3.setLabel("Menú 1");
 
         cartaList.setBackground(new java.awt.Color(204, 204, 204));
-        cartaList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        cartaList.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cartaList.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         cartaList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,12 +178,12 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Quarca Norm Light", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("A la Carta");
 
         antojosList.setBackground(new java.awt.Color(204, 204, 204));
-        antojosList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        antojosList.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         antojosList.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         antojosList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,12 +193,12 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Quarca Norm Light", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Antojos");
 
         bebidasList.setBackground(new java.awt.Color(204, 204, 204));
-        bebidasList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        bebidasList.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         bebidasList.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         bebidasList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,9 +208,23 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Quarca Norm Light", 1, 36)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Bebidas");
+
+        extrasList.setBackground(new java.awt.Color(204, 204, 204));
+
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel4.setFont(new java.awt.Font("Quarca Norm Light", 1, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Extras");
+
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel5.setFont(new java.awt.Font("Quarca Norm Light", 0, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel5.setText("Mesero");
 
         javax.swing.GroupLayout ventasPanelLayout = new javax.swing.GroupLayout(ventasPanel);
         ventasPanel.setLayout(ventasPanelLayout);
@@ -219,45 +247,52 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(button3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
+                    .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+                    .addComponent(extrasList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
-                    .addComponent(textArea1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnFinalizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(reciboTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ventasPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(waiterChoose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
                 .addContainerGap())
         );
         ventasPanelLayout.setVerticalGroup(
             ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ventasPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(ventasPanelLayout.createSequentialGroup()
-                        .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(bebidasList, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(antojosList, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(ventasPanelLayout.createSequentialGroup()
+                .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cartaList, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(waiterChoose, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ventasPanelLayout.createSequentialGroup()
-                        .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(ventasPanelLayout.createSequentialGroup()
-                                .addComponent(button3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(textArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(ventasPanelLayout.createSequentialGroup()
-                                .addComponent(btnFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)))))
+                        .addComponent(reciboTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(bebidasList, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(antojosList, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ventasPanelLayout.createSequentialGroup()
+                            .addComponent(extrasList, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cartaList, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -273,7 +308,7 @@ public class MainScreen extends javax.swing.JFrame {
         );
         inventarioPanelLayout.setVerticalGroup(
             inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 703, Short.MAX_VALUE)
+            .addGap(0, 724, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Inventario", inventarioPanel);
@@ -320,17 +355,25 @@ public class MainScreen extends javax.swing.JFrame {
         new Config().setVisible(true);
     }//GEN-LAST:event_irConfig
 
-    private void cartaListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartaListActionPerformed
+    private void bebidasListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bebidasListActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cartaListActionPerformed
+    }//GEN-LAST:event_bebidasListActionPerformed
 
     private void antojosListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_antojosListActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_antojosListActionPerformed
 
-    private void bebidasListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bebidasListActionPerformed
+    private void cartaListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartaListActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_bebidasListActionPerformed
+    }//GEN-LAST:event_cartaListActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFinalizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -404,17 +447,21 @@ public class MainScreen extends javax.swing.JFrame {
     private java.awt.Button button2;
     private java.awt.Button button3;
     private java.awt.List cartaList;
+    private java.awt.List extrasList;
     private javax.swing.JPanel inventarioPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel logo;
-    private java.awt.TextArea textArea1;
+    private java.awt.TextArea reciboTextArea;
     private javax.swing.JPanel ventasPanel;
+    private java.awt.Choice waiterChoose;
     // End of variables declaration//GEN-END:variables
 }
