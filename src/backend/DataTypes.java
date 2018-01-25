@@ -9,10 +9,8 @@ package backend;
  *
  * @author Rubén Escalante
  */
-public enum FileTypes {
-    CARTA,
-    BEBIDAS,
-    ANTOJOS,
-    MENUS,
-    EXTRAS;
+public enum DataTypes {
+    NAME,
+    PRICE,
+    QUANTITY;
 }

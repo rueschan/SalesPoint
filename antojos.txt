@@ -1,0 +1,13 @@
+Quesadillas:20
+Sopes:20
+Gorditas:18
+Guaraches sencillos:25
+Huaraches especiales:35
+Tacos dorados:35
+Tostadas de tinga:18
+Tacos de guisado:15
+Tacos de bistec:17
+Tacos de milanesa:20
+Tacos de arrachera:25
+Tacos campechanos:20
+Tacos de longaniza:17

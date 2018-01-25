@@ -34,11 +34,16 @@ public class Config extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        TiempoReporte1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        comboAgregar = new javax.swing.JComboBox<>();
+        btnModificar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Configuración");
         setLocation(new java.awt.Point(100, 100));
-        setPreferredSize(new java.awt.Dimension(400, 600));
+        setPreferredSize(new java.awt.Dimension(400, 500));
+        setResizable(false);
 
         Head.setBackground(new java.awt.Color(51, 51, 51));
         Head.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -82,17 +87,62 @@ public class Config extends javax.swing.JFrame {
         jComboBox1.setBorder(null);
         jComboBox1.setPreferredSize(new java.awt.Dimension(100, 30));
         jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
         TiempoReporte.add(jComboBox1);
 
         Body.add(TiempoReporte);
 
         jButton1.setText("Guardar");
+        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         Body.add(jButton1);
+
+        TiempoReporte1.setMinimumSize(new java.awt.Dimension(300, 27));
+        TiempoReporte1.setPreferredSize(new java.awt.Dimension(300, 27));
+        TiempoReporte1.setLayout(new javax.swing.BoxLayout(TiempoReporte1, javax.swing.BoxLayout.LINE_AXIS));
+
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel2.setText("Modificar: ");
+        jLabel2.setToolTipText("Agregar, editar o eliminar las listas de productos. (No para hacer inventario)");
+        TiempoReporte1.add(jLabel2);
+
+        comboAgregar.setBackground(new java.awt.Color(255, 255, 255));
+        comboAgregar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        comboAgregar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Menú", "Bebidas", "Antojos", "Carta", "Extras" }));
+        comboAgregar.setBorder(null);
+        comboAgregar.setPreferredSize(new java.awt.Dimension(100, 30));
+        jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
+        TiempoReporte1.add(comboAgregar);
+
+        Body.add(TiempoReporte1);
+
+        btnModificar.setText("Modificar");
+        btnModificar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        Body.add(btnModificar);
 
         getContentPane().add(Body, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        String selectedFile = (String) comboAgregar.getSelectedItem();
+        
+        openInventoryManager(selectedFile);
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,9 +183,19 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JPanel Body;
     private javax.swing.JPanel Head;
     private javax.swing.JPanel TiempoReporte;
+    private javax.swing.JPanel TiempoReporte1;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JComboBox<String> comboAgregar;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel logo;
     // End of variables declaration//GEN-END:variables
+
+    private void openInventoryManager(String selectedFile) {
+        
+        new InventoryManager().setVisible(true);
+        
+    }
 }

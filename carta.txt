@@ -1,35 +1,30 @@
-Leche
-Pan
-Tortilla
-Tortas
-Sopes
-Leche
-Pan
-Tortilla
-Tortas
-Sopes
-Leche
-Pan
-Tortilla
-Tortas
-Sopes
-Leche
-Pan
-Tortilla
-Tortas
-Sopes
-Leche
-Pan
-Tortilla
-Tortas
-Sopes
-Leche
-Pan
-Tortilla
-Tortas
-Sopes
-Leche
-Pan
-Tortilla
-Tortas
-Sopes
+Papas a la francesa:20
+Sincronizada:18
+Gringa bistec/pollo/corizo:32
+Club sándwich:50
+Hamburguesa BBQ:45
+Hamburguesa hawaiana:45
+Hotdog sencillo:15
+Hotdog especial:20
+Burrito bistec/pollo:40
+Ensalada de espinaca:40
+Ensalada de lechuga:40
+Ensalada Capri:40
+Molletes:40
+Molletes especiales:45
+Huevos al gusto:45
+Chilaquiles con pollo:50
+Chilaquiles con bistec:50
+Omelette:45
+Omelette light:48
+Hot Cakes:45
+Hot Cakes con tocyno y huevo:50
+Milanesa de res:60
+Pechuga empanizada:70
+Costilla de res con ensalada y frijoles guisados:70
+Pechuga asada con ensalada y frijoles guisados:55
+Enchiladas Suizas:55
+Bistec a la mexicana:50
+Pechuga Cordon Bleu con ensalada:65
+Alambre de res/pollo:60
+Pechuga Teriyaki con ensalada:60
