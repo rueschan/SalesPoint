@@ -67,7 +67,6 @@ public class MainScreen extends javax.swing.JFrame {
         Body = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         ventasPanel = new javax.swing.JPanel();
-        reciboTextArea = new java.awt.TextArea();
         btnFinalizar = new java.awt.Button();
         btnCancelar = new java.awt.Button();
         cartaList = new java.awt.List();
@@ -82,6 +81,7 @@ public class MainScreen extends javax.swing.JFrame {
         menusList = new java.awt.List();
         jLabel6 = new javax.swing.JLabel();
         extrasList = new java.awt.List();
+        reciboList = new java.awt.List();
         inventarioPanel = new javax.swing.JPanel();
         MenuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -125,10 +125,6 @@ public class MainScreen extends javax.swing.JFrame {
 
         ventasPanel.setBackground(new java.awt.Color(51, 51, 51));
         ventasPanel.setForeground(new java.awt.Color(102, 102, 102));
-
-        reciboTextArea.setBackground(new java.awt.Color(204, 204, 204));
-        reciboTextArea.setEditable(false);
-        reciboTextArea.setMinimumSize(new java.awt.Dimension(50, 80));
 
         btnFinalizar.setBackground(new java.awt.Color(0, 204, 0));
         btnFinalizar.setFont(new java.awt.Font("Quarca Norm Regular", 0, 24)); // NOI18N
@@ -233,6 +229,9 @@ public class MainScreen extends javax.swing.JFrame {
             }
         });
 
+        reciboList.setBackground(new java.awt.Color(204, 204, 204));
+        reciboList.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+
         javax.swing.GroupLayout ventasPanelLayout = new javax.swing.GroupLayout(ventasPanel);
         ventasPanel.setLayout(ventasPanelLayout);
         ventasPanelLayout.setHorizontalGroup(
@@ -257,14 +256,14 @@ public class MainScreen extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
                     .addComponent(extrasList, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnFinalizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(reciboTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ventasPanelLayout.createSequentialGroup()
+                .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(ventasPanelLayout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(waiterChoose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                    .addComponent(reciboList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         ventasPanelLayout.setVerticalGroup(
@@ -281,7 +280,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ventasPanelLayout.createSequentialGroup()
-                        .addComponent(reciboTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(reciboList, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -359,14 +358,20 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void bebidasListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bebidasListActionPerformed
         // TODO add your handling code here:
+        String selected = bebidasList.getSelectedItem();
+        reciboList.add(selected);
     }//GEN-LAST:event_bebidasListActionPerformed
 
     private void antojosListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_antojosListActionPerformed
         // TODO add your handling code here:
+        String selected = antojosList.getSelectedItem();
+        reciboList.add(selected);
     }//GEN-LAST:event_antojosListActionPerformed
 
     private void cartaListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartaListActionPerformed
         // TODO add your handling code here:
+        String selected = cartaList.getSelectedItem();
+        reciboList.add(selected);
     }//GEN-LAST:event_cartaListActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -379,10 +384,14 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void menusListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menusListActionPerformed
         // TODO add your handling code here:
+        String selected = menusList.getSelectedItem();
+        reciboList.add(selected);
     }//GEN-LAST:event_menusListActionPerformed
 
     private void extrasListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extrasListActionPerformed
         // TODO add your handling code here:
+        String selected = extrasList.getSelectedItem();
+        reciboList.add(selected);
     }//GEN-LAST:event_extrasListActionPerformed
 
     /**
@@ -469,7 +478,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel logo;
     private java.awt.List menusList;
-    private java.awt.TextArea reciboTextArea;
+    private java.awt.List reciboList;
     private javax.swing.JPanel ventasPanel;
     private java.awt.Choice waiterChoose;
     // End of variables declaration//GEN-END:variables
