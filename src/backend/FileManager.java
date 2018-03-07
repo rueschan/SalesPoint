@@ -23,16 +23,8 @@ import java.util.logging.Logger;
  */
 public class FileManager {
     
-//    private static final String fileName = "carta.txt";
-//    private static File selected;
-//    private static final String FILE_BEBIDAS = "bebidas.txt";
-//    private static File bebidas;
-//    private static final String FILE_ANTOJOS = "antojos.txt";
-//    private static File antojos;
-//    private static final String FILE_MENUS = "menus.txt";
-//    private static File menus;
-    
-    public static ArrayList<String> readFile(FileTypes fileType) {
+    // Regresa un arreglo con los nombres de los elementos en el archivo txt correspondiente
+    public static ArrayList<String> readNamesInFile(FileTypes fileType) {
         
         String fileName = fileType.toString().toLowerCase() + ".txt";
         File selected = new File(fileName);
@@ -51,6 +43,55 @@ public class FileManager {
                 while (line != null) {
                     lineItems = line.split(":");
                     salida.add(lineItems[0]);
+                    
+                    line = br.readLine();
+                }
+                br.close();
+                LogFileMannager.writeLog("Nombres leidos de " + fileName + 
+                        ":" + salida.toString());
+            }
+        } catch (Exception e) {
+            LogFileMannager.writeLog(e.getMessage());
+        }
+        return salida;
+    }
+    
+    // Regresa un arreglo con objetos tipo Inventario con los elementos en el archivo txt correspondiente
+    public static ArrayList<Inventario> readItemsInFile(FileTypes fileType) {
+        
+        String fileName = fileType.toString().toLowerCase() + ".txt";
+        File selected = new File(fileName);
+        
+        ArrayList<Inventario> salida = new ArrayList<>();
+        
+        try {
+            if (selected.createNewFile()) {
+                LogFileMannager.writeLog("Archivo " + fileName + " creado con exito.");
+            } else {
+                LogFileMannager.writeLog("Acceso a " + fileName + ".");
+                
+                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "windows-1250"));
+                String line = br.readLine();
+                String[] lineItems;
+                String name;
+                Double price;
+                Integer quantity;
+                while (line != null) {
+                    Inventario nuevo;
+                    lineItems = line.split(":");
+                    name = lineItems[0];
+                    price = Double.parseDouble(lineItems[1]);
+ 
+                    try {
+                        quantity = Integer.parseInt(lineItems[2]);
+                        nuevo = new Inventario(name, price, quantity);
+                        
+                    } catch (IndexOutOfBoundsException e) {
+                        nuevo = new Inventario(name, price);
+                        
+                    }
+
+                    salida.add(nuevo);
                     
                     line = br.readLine();
                 }

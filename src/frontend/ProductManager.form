@@ -120,7 +120,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="list1" min="-2" pref="270" max="-2" attributes="0"/>
+                  <Component id="modList" min="-2" pref="270" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="button1" max="32767" attributes="0"/>
@@ -147,7 +147,7 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="list1" max="32767" attributes="0"/>
+                      <Component id="modList" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel1" max="32767" attributes="0"/>
@@ -172,12 +172,15 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="java.awt.List" name="list1">
+        <Component class="java.awt.List" name="modList">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="cc" red="cc" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="modListActionPerformed"/>
+          </Events>
         </Component>
         <Component class="java.awt.TextField" name="textField1">
           <Properties>

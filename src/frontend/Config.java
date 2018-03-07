@@ -5,6 +5,8 @@
  */
 package frontend;
 
+import backend.FileTypes;
+
 /**
  *
  * @author Rubén Escalante
@@ -195,7 +197,8 @@ public class Config extends javax.swing.JFrame {
 
     private void openInventoryManager(String selectedFile) {
         
-        new InventoryManager().setVisible(true);
+        FileTypes selected = FileTypes.valueOf(selectedFile.toUpperCase());
+        new ProductManager(selected).setVisible(true);
         
     }
 }
