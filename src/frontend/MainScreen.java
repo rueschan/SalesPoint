@@ -43,13 +43,12 @@ public class MainScreen extends javax.swing.JFrame {
         startUI();
     }
     
+    // Inicia las listas en pantalla
     public void startUI() {         
         startList(cartaList, FileTypes.CARTA);
         startList(bebidasList, FileTypes.BEBIDAS);
         startList(antojosList, FileTypes.ANTOJOS);
         startList(extrasList, FileTypes.EXTRAS);
-        
-        System.out.println(alimentos.toString());
 }
     
     // Inicializa las listas de la GUI con los valores de los txt
@@ -57,6 +56,7 @@ public class MainScreen extends javax.swing.JFrame {
         ArrayList<Inventario> platillos = FileManager.readItemsInFile(file);
         Collections.sort(platillos);
         for (Inventario platillo : platillos) {
+            // Añade cada producto a la lista en pantalla correspondiente
             listField.add(platillo.getName());
             
             // Guarda cada producto en el hash table
