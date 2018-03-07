@@ -10,12 +10,14 @@ import backend.FileManager;
 import backend.FileTypes;
 import backend.MemoryFile;
 import backend.ReportManager;
+import backend.Inventario;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Action;
@@ -29,6 +31,9 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author Rubén Escalante
  */
 public class MainScreen extends javax.swing.JFrame {
+    
+    // NullSoft Variables
+    private HashMap<String, Inventario> alimentos = new HashMap<String, Inventario>();
 
     /**
      * Creates new form NewJFrame
@@ -43,15 +48,22 @@ public class MainScreen extends javax.swing.JFrame {
         startList(bebidasList, FileTypes.BEBIDAS);
         startList(antojosList, FileTypes.ANTOJOS);
         startList(extrasList, FileTypes.EXTRAS);
+        
+        System.out.println(alimentos.toString());
 }
     
+    // Inicializa las listas de la GUI con los valores de los txt
     public void startList(java.awt.List listField, FileTypes file) {
-        ArrayList<String> platillos = FileManager.readFile(file);
+        ArrayList<Inventario> platillos = FileManager.readItemsInFile(file);
         Collections.sort(platillos);
-        for (String platillo : platillos) {
-            listField.add(platillo);
+        for (Inventario platillo : platillos) {
+            listField.add(platillo.getName());
+            
+            // Guarda cada producto en el hash table
+            alimentos.put(platillo.getName(), platillo);
         }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
