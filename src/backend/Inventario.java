@@ -10,7 +10,6 @@ Esta clase sirve para almacenar los elementos del inventario de cualquier tipo.
 package backend;
 
 /**
- *
  * @author Rubén Escalante
  * Contact: rescalante21@hotmail.com
  */
@@ -80,10 +79,5 @@ public class Inventario implements Comparable<Inventario>{
     @Override
     public String toString() {
         return "[" + name + ", $" + price + ", " + quantity + " ]";
-    }
-    
-    
-    
-    
-    
+    } 
 }

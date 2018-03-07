@@ -49,7 +49,7 @@ public class MainScreen extends javax.swing.JFrame {
         startList(bebidasList, FileTypes.BEBIDAS);
         startList(antojosList, FileTypes.ANTOJOS);
         startList(extrasList, FileTypes.EXTRAS);
-}
+    }
     
     // Inicializa las listas de la GUI con los valores de los txt
     public void startList(java.awt.List listField, FileTypes file) {
@@ -64,6 +64,13 @@ public class MainScreen extends javax.swing.JFrame {
         }
     }
     
+    public void addRecibo(String key) {
+        Inventario selected = alimentos.get(key);
+        String name = selected.getName();
+        Double price = selected.getPrice();
+        
+        reciboList.add(name + ".... $" + String.valueOf(price));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -204,6 +211,8 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(204, 204, 204));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Bebidas");
+
+        waiterChoose.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Quarca Norm Light", 1, 36)); // NOI18N
@@ -371,23 +380,24 @@ public class MainScreen extends javax.swing.JFrame {
     private void bebidasListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bebidasListActionPerformed
         // TODO add your handling code here:
         String selected = bebidasList.getSelectedItem();
-        reciboList.add(selected);
+        addRecibo(selected);
     }//GEN-LAST:event_bebidasListActionPerformed
 
     private void antojosListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_antojosListActionPerformed
         // TODO add your handling code here:
         String selected = antojosList.getSelectedItem();
-        reciboList.add(selected);
+        addRecibo(selected);
     }//GEN-LAST:event_antojosListActionPerformed
 
     private void cartaListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartaListActionPerformed
         // TODO add your handling code here:
         String selected = cartaList.getSelectedItem();
-        reciboList.add(selected);
+        addRecibo(selected);
     }//GEN-LAST:event_cartaListActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        reciboList.removeAll();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
@@ -397,13 +407,13 @@ public class MainScreen extends javax.swing.JFrame {
     private void menusListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menusListActionPerformed
         // TODO add your handling code here:
         String selected = menusList.getSelectedItem();
-        reciboList.add(selected);
+        addRecibo(selected);
     }//GEN-LAST:event_menusListActionPerformed
 
     private void extrasListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extrasListActionPerformed
         // TODO add your handling code here:
         String selected = extrasList.getSelectedItem();
-        reciboList.add(selected);
+        addRecibo(selected);
     }//GEN-LAST:event_extrasListActionPerformed
 
     /**
