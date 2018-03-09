@@ -11,6 +11,7 @@ import backend.FileTypes;
 import backend.MemoryFile;
 import backend.ReportManager;
 import backend.Inventario;
+import backend.Venta;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -34,6 +35,7 @@ public class MainScreen extends javax.swing.JFrame {
     
     // NullSoft Variables
     private HashMap<String, Inventario> alimentos = new HashMap<String, Inventario>();
+    private Venta recibo; 
 
     /**
      * Creates new form NewJFrame
@@ -49,6 +51,8 @@ public class MainScreen extends javax.swing.JFrame {
         startList(bebidasList, FileTypes.BEBIDAS);
         startList(antojosList, FileTypes.ANTOJOS);
         startList(extrasList, FileTypes.EXTRAS);
+        
+        recibo = new Venta();
     }
     
     // Inicializa las listas de la GUI con los valores de los txt
@@ -252,6 +256,11 @@ public class MainScreen extends javax.swing.JFrame {
 
         reciboList.setBackground(new java.awt.Color(204, 204, 204));
         reciboList.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        reciboList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reciboListActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout ventasPanelLayout = new javax.swing.GroupLayout(ventasPanel);
         ventasPanel.setLayout(ventasPanelLayout);
@@ -415,6 +424,12 @@ public class MainScreen extends javax.swing.JFrame {
         String selected = extrasList.getSelectedItem();
         addRecibo(selected);
     }//GEN-LAST:event_extrasListActionPerformed
+
+    private void reciboListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reciboListActionPerformed
+        // TODO add your handling code here:
+        String selected = reciboList.getSelectedItem();
+        reciboList.remove(selected);
+    }//GEN-LAST:event_reciboListActionPerformed
 
     /**
      * @param args the command line arguments

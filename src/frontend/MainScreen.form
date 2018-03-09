@@ -481,6 +481,9 @@
                       <Font name="Dialog" size="24" style="0"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reciboListActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
