@@ -14,7 +14,9 @@ import backend.Inventario;
 import backend.Venta;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.List;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,10 +24,14 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Action;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.FontUIResource;
 
 /**
  *
@@ -36,6 +42,9 @@ public class MainScreen extends javax.swing.JFrame {
     // NullSoft Variables
     private HashMap<String, Inventario> alimentos = new HashMap<String, Inventario>();
     private Venta recibo; 
+    DefaultListModel model;
+    
+    
 
     /**
      * Creates new form NewJFrame
@@ -53,6 +62,11 @@ public class MainScreen extends javax.swing.JFrame {
         startList(extrasList, FileTypes.EXTRAS);
         
         recibo = new Venta();
+        model = new DefaultListModel();
+        model.addElement(rellenar());
+        model.addElement(rellenar());
+        model.addElement(rellenar());
+        model.get(0);
     }
     
     // Inicializa las listas de la GUI con los valores de los txt
@@ -68,10 +82,27 @@ public class MainScreen extends javax.swing.JFrame {
         }
     }
     
+    public List returnListOfMenu(){
+        return cartaList;
+    }
+    
+    public JButton rellenar(){
+      
+            JButton button = new JButton();
+            button.setText("Prueba");
+            return button;
+           
+    }
+    public void addToModel(){
+        model.addElement(rellenar());
+    }
+    
     public void addRecibo(String key) {
         Inventario selected = alimentos.get(key);
         String name = selected.getName();
         Double price = selected.getPrice();
+        
+        recibo.addItem(selected);
         
         reciboList.add(name + ".... $" + String.valueOf(price));
     }
@@ -116,7 +147,6 @@ public class MainScreen extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("NullSoft Sale System");
         setMinimumSize(new java.awt.Dimension(1200, 850));
-        setPreferredSize(new java.awt.Dimension(1280, 850));
         setSize(new java.awt.Dimension(1280, 1000));
 
         Head.setBackground(new java.awt.Color(51, 51, 51));
@@ -133,7 +163,7 @@ public class MainScreen extends javax.swing.JFrame {
         HeadLayout.setHorizontalGroup(
             HeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HeadLayout.createSequentialGroup()
-                .addGap(0, 1403, Short.MAX_VALUE)
+                .addGap(0, 1408, Short.MAX_VALUE)
                 .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         HeadLayout.setVerticalGroup(
@@ -293,7 +323,7 @@ public class MainScreen extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(waiterChoose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                    .addComponent(reciboList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(reciboList, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         ventasPanelLayout.setVerticalGroup(
@@ -301,7 +331,7 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ventasPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(waiterChoose, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -312,9 +342,9 @@ public class MainScreen extends javax.swing.JFrame {
                     .addGroup(ventasPanelLayout.createSequentialGroup()
                         .addComponent(reciboList, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                        .addComponent(btnFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
                     .addComponent(bebidasList, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(antojosList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cartaList, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -335,11 +365,11 @@ public class MainScreen extends javax.swing.JFrame {
         inventarioPanel.setLayout(inventarioPanelLayout);
         inventarioPanelLayout.setHorizontalGroup(
             inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1549, Short.MAX_VALUE)
+            .addGap(0, 1551, Short.MAX_VALUE)
         );
         inventarioPanelLayout.setVerticalGroup(
             inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 744, Short.MAX_VALUE)
+            .addGap(0, 747, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Inventario", inventarioPanel);
@@ -410,6 +440,15 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+
+        UIManager.put("OptionPane.minimumSize",new Dimension(400,400)); 
+        UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Arial", Font.BOLD, 18)));      
+        int n = JOptionPane.showConfirmDialog(null, recibo.getElements()+"\n"+"Total a pagar: "+recibo.getTotal(),"Cuenta a Pagar",JOptionPane.OK_CANCEL_OPTION);
+        
+        
+       /* if(n == JOptionPane.OK_OPTION){
+            
+        }*/
         // TODO add your handling code here:
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
@@ -428,7 +467,11 @@ public class MainScreen extends javax.swing.JFrame {
     private void reciboListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reciboListActionPerformed
         // TODO add your handling code here:
         String selected = reciboList.getSelectedItem();
+        System.out.println(selected);
         reciboList.remove(selected);
+        recibo.removeItemByItem(selected);
+        System.out.println(recibo.toString());
+       
     }//GEN-LAST:event_reciboListActionPerformed
 
     /**

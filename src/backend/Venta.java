@@ -7,6 +7,8 @@ para una venta. Otra manera de llamarlo podría ser "recibo".
 package backend;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Rubén Escalante
@@ -30,11 +32,43 @@ public class Venta {
     
     public void removeItemByItem(String item) {
         
-        for (Inventario element : venta) {
-            if (element.getName().equals(item)) {
-                venta.remove(element);
+        String cleaned = "";
+            for (int i = 0; i < item.length(); i++) {
+                if(item.charAt(i)=='.'){
+                    break;
+                }else{
+                    cleaned += item.charAt(i);
+                }
+                    
             }
-        }  
+
+            System.out.println("ESTE ES EL LIMPIO"+cleaned);
+    
+    
+    List<String> arr = new ArrayList<String>();
+            
+        Iterator<Inventario> iter = venta.iterator();
+        
+        while(iter.hasNext()){
+            
+            Inventario element  = iter.next();
+            
+            if(cleaned.equalsIgnoreCase(element.getName())){
+                arr.add(element.getName());
+            }
+        }
+        
+        venta.removeAll(arr);
+    }
+    
+    public String getElements(){
+        
+        StringBuilder sb = new StringBuilder();
+        venta.forEach((Inventario element) -> {
+            sb.append(element.getName()).append(" ").append(element.getPrice()).append("\n");
+        });
+        
+        return sb.toString();
     }
     
     public Double getTotal() {
@@ -48,6 +82,11 @@ public class Venta {
     
     public void cleanVenta() {
         venta.clear();
+    }
+    
+    public int size(){
+        return venta.size();
+        
     }
     
 }

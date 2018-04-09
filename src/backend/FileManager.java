@@ -6,6 +6,7 @@
 package backend;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -147,18 +148,44 @@ public class FileManager {
     
     public static void addToFile(FileTypes fileType, String[] data) {
         
+        
+        BufferedWriter bw = null;
+        FileWriter fw = null;
         String fileName = fileType.toString().toLowerCase() + ".txt";
-        File selected = new File(fileName);
+        
         
         try {
-            FileWriter fw = new FileWriter(selected);
             
-            fw.append(data[0] + ":" + data[1] + ":" + data[2]);
-            fw.close();
+            String cadena = "\n"+data[0] + ":" + data[1] + ":" + data[2];
+            File file = new File(fileName);
+          
+	    fw = new FileWriter(file.getAbsoluteFile(), true);
+	    bw = new BufferedWriter(fw);
             
-        } catch (IOException ex) {
-            LogFileMannager.writeLog("EXCEPTION >> " + ex.getMessage());
-        }
+            bw.write(cadena);
+
+	    System.out.println("Done");
+
+	} catch (IOException e) {
+
+		e.printStackTrace();
+
+	} finally {
+
+		try {
+
+                    if (bw != null)
+			bw.close();
+
+                    if (fw != null)
+			fw.close();
+
+		} catch (IOException ex) {
+
+			ex.printStackTrace();
+
+		}
+	}
     }
     
 }

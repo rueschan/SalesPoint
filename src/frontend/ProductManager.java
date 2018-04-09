@@ -5,13 +5,20 @@
  */
 package frontend;
 
+import backend.FileManager;
 import backend.FileTypes;
+import backend.Inventario;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
  * @author Rubén Escalante
  */
 public class ProductManager extends javax.swing.JFrame {
+    
+    
+    private FileTypes tipo;
 
     /**
      * Creates new form InventoryManager
@@ -22,12 +29,24 @@ public class ProductManager extends javax.swing.JFrame {
     
     public ProductManager(FileTypes type) {
         initComponents();
+        tipo = type;
         initList(type);
     }
     
     private void initList(FileTypes type) {
-        MainScreen main = new MainScreen();
-        main.startList(modList, type);
+        startList(tipo);
+    }
+    
+    public void startList(FileTypes file) {
+        
+        ArrayList<Inventario> platillos = FileManager.readItemsInFile(file);
+        System.out.println(platillos.size());
+        Collections.sort(platillos);
+        for (Inventario platillo : platillos) {
+            System.out.println(platillo.getName());
+            modList.add(platillo.getName());
+           
+        }
     }
 
     /**
@@ -106,12 +125,22 @@ public class ProductManager extends javax.swing.JFrame {
         button1.setBackground(new java.awt.Color(0, 204, 0));
         button1.setFont(new java.awt.Font("Quarca Norm Regular", 0, 24)); // NOI18N
         button1.setLabel("Aceptar");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
 
         button2.setActionCommand("EliminarInvMan");
         button2.setBackground(new java.awt.Color(204, 0, 0));
         button2.setFont(new java.awt.Font("Quarca Norm Regular", 0, 24)); // NOI18N
         button2.setForeground(new java.awt.Color(255, 255, 255));
         button2.setLabel("Eliminar");
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
 
         button3.setActionCommand("CancelarInvMan");
         button3.setBackground(new java.awt.Color(0, 153, 204));
@@ -119,10 +148,13 @@ public class ProductManager extends javax.swing.JFrame {
         button3.setLabel("Cancelar");
 
         jLabel1.setFont(new java.awt.Font("Quarca Norm Light", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("Producto: ");
 
         jLabel2.setFont(new java.awt.Font("Quarca Norm Light", 0, 24)); // NOI18N
-        jLabel2.setText("Precio:               $");
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setText("Precio:     $");
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout BodyLayout = new javax.swing.GroupLayout(Body);
         Body.setLayout(BodyLayout);
@@ -133,17 +165,20 @@ public class ProductManager extends javax.swing.JFrame {
                 .addComponent(modList, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(BodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(button2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(button3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BodyLayout.createSequentialGroup()
+                    .addGroup(BodyLayout.createSequentialGroup()
                         .addGroup(BodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(BodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BodyLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(BodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(button1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         BodyLayout.setVerticalGroup(
@@ -160,14 +195,17 @@ public class ProductManager extends javax.swing.JFrame {
                         .addGroup(BodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(textField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(22, 22, 22)
+                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(108, 108, 108)))
                 .addGap(207, 207, 207))
         );
+
+        jLabel2.getAccessibleContext().setAccessibleName("Precio: $");
 
         getContentPane().add(Body, java.awt.BorderLayout.CENTER);
 
@@ -178,6 +216,23 @@ public class ProductManager extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_modListActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        modList.add(textField1.getText().toString());
+        String[] arr = new String[3];
+        arr[0] = textField1.getText().toString();
+        arr[1] = textField2.getText().toString();
+        arr[2] = String.valueOf(0);
+        FileManager.addToFile(tipo, arr);
+        MainScreen ms = new MainScreen();
+        
+        ms.returnListOfMenu().add(arr[0]);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button1ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button2ActionPerformed
 
     /**
      * @param args the command line arguments

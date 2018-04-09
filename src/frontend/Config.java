@@ -197,8 +197,13 @@ public class Config extends javax.swing.JFrame {
 
     private void openInventoryManager(String selectedFile) {
         
-        FileTypes selected = FileTypes.valueOf(selectedFile.toUpperCase());
-        new ProductManager(selected).setVisible(true);
-        
+        if(selectedFile.equalsIgnoreCase("menú")){
+            FileTypes selected = FileTypes.MENUS;
+            new ProductManager(selected).setVisible(true);
+        }else{
+            
+            FileTypes selected = FileTypes.valueOf(selectedFile.toUpperCase());
+            new ProductManager(selected).setVisible(true);
+        }
     }
 }
