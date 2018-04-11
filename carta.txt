@@ -28,7 +28,3 @@ Bistec a la mexicana:50
 Pechuga Cordon Bleu con ensalada:65
 Alambre de res/pollo:60
 Pechuga Teriyaki con ensalada:60
-comida de prueba:10:0
-caca de chan:20:0
-cacaa de chancrooo:10:0
-cacaa de chancrooo:10:0

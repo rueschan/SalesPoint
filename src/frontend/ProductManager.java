@@ -10,6 +10,8 @@ import backend.FileTypes;
 import backend.Inventario;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,11 +32,7 @@ public class ProductManager extends javax.swing.JFrame {
     public ProductManager(FileTypes type) {
         initComponents();
         tipo = type;
-        initList(type);
-    }
-    
-    private void initList(FileTypes type) {
-        startList(tipo);
+        startList(type);
     }
     
     public void startList(FileTypes file) {
@@ -47,6 +45,11 @@ public class ProductManager extends javax.swing.JFrame {
             modList.add(platillo.getName());
            
         }
+    }
+    
+    private void cleanFields() {
+        productoTf.setText("");
+        precioTf.setText("");
     }
 
     /**
@@ -62,21 +65,22 @@ public class ProductManager extends javax.swing.JFrame {
         logo = new javax.swing.JLabel();
         Body = new javax.swing.JPanel();
         modList = new java.awt.List();
-        textField1 = new java.awt.TextField();
-        textField2 = new java.awt.TextField();
-        button1 = new java.awt.Button();
-        button2 = new java.awt.Button();
-        button3 = new java.awt.Button();
+        productoTf = new java.awt.TextField();
+        precioTf = new java.awt.TextField();
+        btnAceptar = new java.awt.Button();
+        btnEliminar = new java.awt.Button();
+        btnCancelar = new java.awt.Button();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar Listas");
         setFont(new java.awt.Font("Quarca Norm Light", 0, 24)); // NOI18N
-        setMinimumSize(new java.awt.Dimension(620, 490));
-        setPreferredSize(new java.awt.Dimension(650, 525));
+        setMaximumSize(new java.awt.Dimension(800, 200));
+        setMinimumSize(new java.awt.Dimension(600, 500));
+        setPreferredSize(new java.awt.Dimension(600, 500));
         setResizable(false);
-        setSize(new java.awt.Dimension(800, 200));
+        setSize(new java.awt.Dimension(600, 500));
 
         Head.setBackground(new java.awt.Color(51, 51, 51));
         Head.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -92,7 +96,7 @@ public class ProductManager extends javax.swing.JFrame {
         HeadLayout.setHorizontalGroup(
             HeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HeadLayout.createSequentialGroup()
-                .addGap(0, 464, Short.MAX_VALUE)
+                .addGap(0, 469, Short.MAX_VALUE)
                 .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         HeadLayout.setVerticalGroup(
@@ -109,43 +113,49 @@ public class ProductManager extends javax.swing.JFrame {
         Body.setPreferredSize(new java.awt.Dimension(400, 600));
 
         modList.setBackground(new java.awt.Color(204, 204, 204));
+        modList.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         modList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modListActionPerformed(evt);
             }
         });
 
-        textField1.setBackground(new java.awt.Color(204, 204, 204));
-        textField1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        productoTf.setBackground(new java.awt.Color(204, 204, 204));
+        productoTf.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
 
-        textField2.setBackground(new java.awt.Color(204, 204, 204));
-        textField2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        precioTf.setBackground(new java.awt.Color(204, 204, 204));
+        precioTf.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
 
-        button1.setActionCommand("Aceptar");
-        button1.setBackground(new java.awt.Color(0, 204, 0));
-        button1.setFont(new java.awt.Font("Quarca Norm Regular", 0, 24)); // NOI18N
-        button1.setLabel("Aceptar");
-        button1.addActionListener(new java.awt.event.ActionListener() {
+        btnAceptar.setActionCommand("Aceptar");
+        btnAceptar.setBackground(new java.awt.Color(0, 204, 0));
+        btnAceptar.setFont(new java.awt.Font("Quarca Norm Regular", 0, 24)); // NOI18N
+        btnAceptar.setLabel("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
+                btnAceptarActionPerformed(evt);
             }
         });
 
-        button2.setActionCommand("EliminarInvMan");
-        button2.setBackground(new java.awt.Color(204, 0, 0));
-        button2.setFont(new java.awt.Font("Quarca Norm Regular", 0, 24)); // NOI18N
-        button2.setForeground(new java.awt.Color(255, 255, 255));
-        button2.setLabel("Eliminar");
-        button2.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setActionCommand("EliminarInvMan");
+        btnEliminar.setBackground(new java.awt.Color(204, 0, 0));
+        btnEliminar.setFont(new java.awt.Font("Quarca Norm Regular", 0, 24)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setLabel("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button2ActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
-        button3.setActionCommand("CancelarInvMan");
-        button3.setBackground(new java.awt.Color(0, 153, 204));
-        button3.setFont(new java.awt.Font("Quarca Norm Regular", 0, 24)); // NOI18N
-        button3.setLabel("Cancelar");
+        btnCancelar.setActionCommand("CancelarInvMan");
+        btnCancelar.setBackground(new java.awt.Color(0, 153, 204));
+        btnCancelar.setFont(new java.awt.Font("Quarca Norm Regular", 0, 24)); // NOI18N
+        btnCancelar.setLabel("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Quarca Norm Light", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
@@ -167,18 +177,18 @@ public class ProductManager extends javax.swing.JFrame {
                 .addGroup(BodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(BodyLayout.createSequentialGroup()
                         .addGroup(BodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(BodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(productoTf, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(precioTf, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BodyLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(BodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(button1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnAceptar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         BodyLayout.setVerticalGroup(
@@ -190,17 +200,17 @@ public class ProductManager extends javax.swing.JFrame {
                     .addGroup(BodyLayout.createSequentialGroup()
                         .addGroup(BodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(textField1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+                            .addComponent(productoTf, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(BodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(precioTf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(22, 22, 22)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(108, 108, 108)))
                 .addGap(207, 207, 207))
         );
@@ -212,27 +222,50 @@ public class ProductManager extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        cleanFields();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        String selected = modList.getSelectedItem();
+        FileManager.deleteFromFileByName(tipo, selected);
+        modList.remove(selected);
+        MainScreen.alimentos.remove(selected);
+
+        MainScreen.INSTANCE.resetUI();
+        cleanFields();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        String[] arr = new String[3];
+        arr[0] = productoTf.getText().toString();
+        arr[1] = precioTf.getText().toString();
+        
+        if (arr[0].isEmpty() && !arr[1].matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Ingrese nombre y precio del producto.");
+        } else if (arr[0].isEmpty()) {
+            JOptionPane.showMessageDialog(new JFrame(), "Ingrese nombre del producto.");
+        } else if (!arr[1].matches("[0-9]+") || arr[1].isEmpty()) {
+            JOptionPane.showMessageDialog(new JFrame(), "Ingrese precio del producto. (Utilice sólo números)");
+        } else {
+            modList.add(productoTf.getText().toString());
+            FileManager.addToFile(tipo, arr);
+            MainScreen.INSTANCE.resetUI();
+            cleanFields();
+        }
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
     private void modListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modListActionPerformed
         // TODO add your handling code here:
+        String selected = modList.getSelectedItem();
+        Inventario item = MainScreen.alimentos.get(selected);
+        
+        productoTf.setText(item.getName());
+        precioTf.setText(item.getPrice().toString());
         
     }//GEN-LAST:event_modListActionPerformed
-
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        modList.add(textField1.getText().toString());
-        String[] arr = new String[3];
-        arr[0] = textField1.getText().toString();
-        arr[1] = textField2.getText().toString();
-        arr[2] = String.valueOf(0);
-        FileManager.addToFile(tipo, arr);
-        MainScreen ms = new MainScreen();
-        
-        ms.returnListOfMenu().add(arr[0]);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button1ActionPerformed
-
-    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,14 +306,14 @@ public class ProductManager extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Body;
     private javax.swing.JPanel Head;
-    private java.awt.Button button1;
-    private java.awt.Button button2;
-    private java.awt.Button button3;
+    private java.awt.Button btnAceptar;
+    private java.awt.Button btnCancelar;
+    private java.awt.Button btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel logo;
     private java.awt.List modList;
-    private java.awt.TextField textField1;
-    private java.awt.TextField textField2;
+    private java.awt.TextField precioTf;
+    private java.awt.TextField productoTf;
     // End of variables declaration//GEN-END:variables
 }

@@ -33,20 +33,17 @@ public class Venta {
     public void removeItemByItem(String item) {
         
         String cleaned = "";
-            for (int i = 0; i < item.length(); i++) {
-                if(item.charAt(i)=='.'){
-                    break;
-                }else{
-                    cleaned += item.charAt(i);
-                }
-                    
+        for (int i = 0; i < item.length(); i++) {
+            if(item.charAt(i)=='.'){
+                break;
+            }else{
+                cleaned += item.charAt(i);
             }
 
-            System.out.println("ESTE ES EL LIMPIO"+cleaned);
-    
-    
-    List<String> arr = new ArrayList<String>();
-            
+        }
+        System.out.println("Item a remover: '" + cleaned + "'");
+        
+        List<String> arr = new ArrayList<String>();    
         Iterator<Inventario> iter = venta.iterator();
         
         while(iter.hasNext()){

@@ -40,8 +40,9 @@ import javax.swing.plaf.FontUIResource;
 public class MainScreen extends javax.swing.JFrame {
     
     // NullSoft Variables
-    private HashMap<String, Inventario> alimentos = new HashMap<String, Inventario>();
-    private Venta recibo; 
+    public static MainScreen INSTANCE;
+    public static HashMap<String, Inventario> alimentos = new HashMap<String, Inventario>();
+    public static Venta recibo; 
     DefaultListModel model;
     
     
@@ -50,6 +51,7 @@ public class MainScreen extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     public MainScreen() {
+        INSTANCE = this;
         initComponents();
         startUI();
     }
@@ -69,22 +71,35 @@ public class MainScreen extends javax.swing.JFrame {
         model.get(0);
     }
     
+    public void resetUI() {
+        cartaList.removeAll();
+        bebidasList.removeAll();
+        antojosList.removeAll();
+        extrasList.removeAll();
+        
+        startUI();
+    }
+    
     // Inicializa las listas de la GUI con los valores de los txt
     public void startList(java.awt.List listField, FileTypes file) {
         ArrayList<Inventario> platillos = FileManager.readItemsInFile(file);
         Collections.sort(platillos);
+        String name;
         for (Inventario platillo : platillos) {
+            name = platillo.getName();
             // Añade cada producto a la lista en pantalla correspondiente
-            listField.add(platillo.getName());
+            listField.add(name);
             
             // Guarda cada producto en el hash table
-            alimentos.put(platillo.getName(), platillo);
+            if (!alimentos.containsKey(name)) {
+                alimentos.put(name, platillo);
+            }
         }
     }
     
-    public List returnListOfMenu(){
-        return cartaList;
-    }
+//    public List returnListOfMenu(){
+//        return cartaList;
+//    }
     
     public JButton rellenar(){
       
@@ -137,6 +152,7 @@ public class MainScreen extends javax.swing.JFrame {
         extrasList = new java.awt.List();
         reciboList = new java.awt.List();
         inventarioPanel = new javax.swing.JPanel();
+        list1 = new java.awt.List();
         MenuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -361,15 +377,23 @@ public class MainScreen extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Ventas", ventasPanel);
 
+        list1.setBackground(new java.awt.Color(204, 204, 204));
+
         javax.swing.GroupLayout inventarioPanelLayout = new javax.swing.GroupLayout(inventarioPanel);
         inventarioPanel.setLayout(inventarioPanelLayout);
         inventarioPanelLayout.setHorizontalGroup(
             inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1551, Short.MAX_VALUE)
+            .addGroup(inventarioPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 1534, Short.MAX_VALUE)
+                .addContainerGap())
         );
         inventarioPanelLayout.setVerticalGroup(
             inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 747, Short.MAX_VALUE)
+            .addGroup(inventarioPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(list1, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Inventario", inventarioPanel);
@@ -513,7 +537,6 @@ public class MainScreen extends javax.swing.JFrame {
                 
                 // TEST ZONE
                 ReportManager.createReport("excelTest");
-                new Config().setVisible(true);
                 // /.TEST ZONE
                 
                 //startup();
@@ -556,6 +579,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private java.awt.List list1;
     private javax.swing.JLabel logo;
     private java.awt.List menusList;
     private java.awt.List reciboList;

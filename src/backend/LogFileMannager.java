@@ -35,7 +35,7 @@ public class LogFileMannager {
                 fw.write(dateFormat.format(date) + " :: " + log + "\r\n");
                 fw.close();
                 
-                System.out.println("Log añadido...");
+                System.out.println("Log añadido... > " + log);
                 return true;
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
