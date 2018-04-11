@@ -108,7 +108,6 @@ public class FileManager {
                 
             }
         } catch (IOException exception) {
-            System.out.println("ERROR " + exception.getCause());
             LogFileMannager.writeLog(exception.getLocalizedMessage());
         }
         return salida;
@@ -125,6 +124,12 @@ public class FileManager {
         File tempFile = new File(tempName);
 
         File nuevo = new File(fileName);
+        try {
+            nuevo.createNewFile();
+        } catch (IOException ex) {
+            LogFileMannager.writeLog(ex.getLocalizedMessage());
+        }
+        
         BufferedReader br;
         FileWriter fw;
         
@@ -159,6 +164,8 @@ public class FileManager {
         } catch (Exception ex) {
             Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        tempFile.delete();
     }
     
     public static void addToFile(FileTypes fileType, String[] data) {    
@@ -184,7 +191,48 @@ public class FileManager {
             bw.write(cadena);
         
             LogFileMannager.writeLog("Se añadió " + data[0] + " a " + fileType.toString());
-	    System.out.println("Done");
+	    System.out.println("Se añadió " + data[0] + " a " + fileType.toString());
+
+	} catch (IOException e) {
+
+		e.printStackTrace();
+
+	} finally {
+
+		try {
+
+                    if (bw != null)
+			bw.close();
+
+                    if (fw != null)
+			fw.close();
+
+		} catch (IOException ex) {
+
+			ex.printStackTrace();
+
+		}
+	}
+    }
+    
+    public static void addToPlainFile(FileTypes fileType, String data) {    
+        
+        BufferedWriter bw = null;
+        FileWriter fw = null;
+        String fileName = fileType.toString().toLowerCase() + ".txt";
+        
+        
+        try {
+            
+            String cadena;
+            File file = new File(fileName);
+          
+	    fw = new FileWriter(file.getAbsoluteFile(), true);
+	    bw = new BufferedWriter(fw);
+            
+            bw.write(data);
+        
+            LogFileMannager.writeLog("Se añadió texto a " + fileType.toString());
 
 	} catch (IOException e) {
 
@@ -218,6 +266,12 @@ public class FileManager {
         File tempFile = new File(tempName);
 
         File nuevo = new File(fileName);
+        try {
+            nuevo.createNewFile();
+        } catch (IOException ex) {
+            LogFileMannager.writeLog(ex.getLocalizedMessage());
+        }
+        
         BufferedReader br;
         FileWriter fw;
         
@@ -243,6 +297,8 @@ public class FileManager {
         } catch (Exception ex) {
             Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        tempFile.delete();
     }
     
     public static void deleteFromFileByName(FileTypes fileType, String data) {
@@ -255,6 +311,12 @@ public class FileManager {
         File tempFile = new File(tempName);
 
         File nuevo = new File(fileName);
+        try {
+            nuevo.createNewFile();
+        } catch (IOException ex) {
+            LogFileMannager.writeLog(ex.getLocalizedMessage());
+        }
+        
         BufferedReader br;
         FileWriter fw;
         
@@ -280,6 +342,8 @@ public class FileManager {
         } catch (Exception ex) {
             Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        tempFile.delete();
     }
     
 }

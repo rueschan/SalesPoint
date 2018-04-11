@@ -14,5 +14,6 @@ public enum FileTypes {
     BEBIDAS,
     ANTOJOS,
     MENUS,
-    EXTRAS;
+    EXTRAS,
+    TICKET
 }

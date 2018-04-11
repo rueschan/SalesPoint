@@ -195,7 +195,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel4" pref="396" max="32767" attributes="0"/>
                               <Component id="menusList" alignment="0" pref="396" max="32767" attributes="0"/>
-                              <Component id="jLabel6" alignment="0" pref="396" max="32767" attributes="0"/>
+                              <Component id="jLabel6" alignment="0" pref="398" max="32767" attributes="0"/>
                               <Component id="extrasList" alignment="0" pref="396" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -206,8 +206,9 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="waiterChoose" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="btnCancelar" alignment="1" pref="343" max="32767" attributes="0"/>
+                              <Component id="btnCancelar" alignment="1" pref="346" max="32767" attributes="0"/>
                               <Component id="reciboList" pref="0" max="32767" attributes="0"/>
+                              <Component id="creditCardRadioBtn" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -218,7 +219,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jLabel3" alignment="0" pref="47" max="32767" attributes="0"/>
                               <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
                               <Component id="waiterChoose" alignment="1" max="32767" attributes="0"/>
                               <Component id="jLabel1" alignment="1" max="32767" attributes="0"/>
@@ -227,22 +228,29 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="reciboList" min="-2" pref="395" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="btnFinalizar" pref="126" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="btnCancelar" pref="126" max="32767" attributes="0"/>
-                              </Group>
                               <Component id="bebidasList" alignment="1" max="32767" attributes="0"/>
                               <Component id="antojosList" max="32767" attributes="0"/>
                               <Component id="cartaList" alignment="1" max="32767" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="extrasList" min="-2" pref="258" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel6" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="menusList" min="-2" pref="308" max="-2" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="reciboList" max="32767" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="extrasList" min="-2" pref="258" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jLabel6" pref="91" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="creditCardRadioBtn" min="-2" pref="28" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                                          <Component id="btnFinalizar" max="32767" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="btnCancelar" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Component id="menusList" min="-2" pref="308" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -480,6 +488,18 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reciboListActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="creditCardRadioBtn">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Quarca Norm Thin" size="18" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Tarjeta de Credito"/>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="creditCardRadioBtnActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>

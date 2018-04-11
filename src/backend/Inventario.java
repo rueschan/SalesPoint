@@ -80,4 +80,8 @@ public class Inventario implements Comparable<Inventario>{
     public String toString() {
         return "[" + name + ", $" + price + ", " + quantity + " ]";
     } 
+    
+    public String toTicketString() {
+        return name + ", $" + price;
+    }
 }

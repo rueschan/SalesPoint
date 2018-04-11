@@ -85,5 +85,23 @@ public class Venta {
         return venta.size();
         
     }
+
+    @Override
+    public String toString() {
+        String salida = "";
+        
+        for (Inventario inventario : venta) {
+            salida += inventario.toString() + "\r\n";
+        }
+        return salida;
+    }
     
+    public String toTicketString() {
+        String salida = "";
+        
+        for (Inventario inventario : venta) {
+            salida += inventario.toTicketString() + "\r\n";
+        }
+        return salida;
+    }
 }
