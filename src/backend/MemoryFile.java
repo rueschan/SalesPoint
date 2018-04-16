@@ -24,7 +24,7 @@ public class MemoryFile {
     // Agregar variables de cantidades a calcular de manera cotidiana
     private static String date;
     private static Double total;
-    private static ArrayList<Object> memoryData = new ArrayList<>();
+    private static ArrayList<Object> memoryData;
     public static final int DATE_ID = 0;
     public static final int TOTAL_ID = 1;
 
@@ -36,12 +36,27 @@ public class MemoryFile {
         memoryData.remove(data);
     }
     
+    private static void startMemoryData() {
+        date = DateManager.getDay();
+        total = 0.0;
+        memoryData = new ArrayList<>();
+        memoryData.add(date);
+        memoryData.add(total);
+    }
+    
     public static void resetMemoryData() {
+        
+        // Se cambia segun los valores que existan
+        total = 0.0;
+        date = "<Not defined>";
         memoryData.clear();
+        
+        save();
     }
     
     public static ArrayList<Object> getData() {
         ArrayList<Object> salida = new ArrayList<>(memoryData.size() - 2);
+        System.out.println(memoryData.size());
         for (int i = 2; i < memoryData.size() - 2; i++) {
             salida.add(memoryData.get(i));
         }
@@ -94,7 +109,7 @@ public class MemoryFile {
     }
     
     public static void load() {
-        reset();
+        resetMemoryData();
         BufferedReader br;
         
         try {
@@ -108,6 +123,9 @@ public class MemoryFile {
     }
 
     private static void assignValues(String registro) {
+        if (!registro.contains(",")) {
+            return;
+        }
         String[] valores = registro.split(",");
         for (int i = 0; i < valores.length; i++) {
             memoryData.add(valores[i]);
@@ -120,25 +138,23 @@ public class MemoryFile {
         memoryData.add(TOTAL_ID, total);
     }
     
-    public static void reset() {
-        
-        // Se cambia segun los valores que existan
-        total = 0.0;
-        date = "<Not defined>";
-        memoryData.clear();
-        
-        save();
-    }
-    
     public static boolean isMemoryFile() throws IOException {
         try {
             FileReader fr = new FileReader(PATHNAME);
             BufferedReader br = new BufferedReader(fr);
-            String date = br.readLine().split(",")[DATE_ID];
-            
-            if (date.equals(DateManager.getDay())) {
-                load();
-                return true;
+            if (br.readLine() != null && br.readLine().contains(",")) {
+                String date = br.readLine().split(",")[DATE_ID];
+                
+                if (date.equals(DateManager.getDay())) {
+                    load();
+                    return true;
+                } else {
+                    startMemoryData();
+                    save();
+                }
+            } else {
+                startMemoryData();
+                save();
             }
             return false;
         
