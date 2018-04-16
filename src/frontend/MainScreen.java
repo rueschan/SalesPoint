@@ -5,6 +5,7 @@
  */
 package frontend;
 
+import backend.DataTypes;
 import backend.FileManager;
 import backend.FileTypes;
 import backend.MemoryFile;
@@ -19,8 +20,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -44,7 +47,7 @@ public class MainScreen extends javax.swing.JFrame {
     public MainScreen() {
         INSTANCE = this;
         initComponents();
-        startUp();
+        //startUp();
         startUI();
     }
     
@@ -61,13 +64,17 @@ public class MainScreen extends javax.swing.JFrame {
     }
     
     // Inicia las listas en pantalla
-    public void startUI() {         
+    public void startUI() {     
+        jTable1.getTableHeader().setFont(new Font("Tahoma", Font.PLAIN, 24));
+        jTable2.getTableHeader().setFont(new Font("Tahoma", Font.PLAIN, 24));
         startList(cartaList, FileTypes.CARTA);
         startList(bebidasList, FileTypes.BEBIDAS);
         startList(antojosList, FileTypes.ANTOJOS);
         startList(extrasList, FileTypes.EXTRAS);
-        startMenu();
-        startWaiters();
+        startTable(jTable1, FileTypes.BEBIDAS);
+        startTableGastos(jTable2, FileTypes.GASTOS);
+        //startMenu();
+        //startWaiters();
         
         recibo = new Venta();
     }
@@ -100,6 +107,48 @@ public class MainScreen extends javax.swing.JFrame {
             }
         }
     }
+    public void startTable(JTable table, FileTypes file) {
+        ArrayList<Inventario> platillos = FileManager.readItemsInFile(file);
+        Collections.sort(platillos);
+        String name;
+        int cantidad;
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        for (Inventario platillo : platillos) {
+            
+            name = platillo.getName();
+            cantidad = platillo.getQuantity();
+            // Añade cada producto a la lista en pantalla correspondiente
+           
+            model.addRow(new Object[]{name, cantidad});
+            
+            // Guarda cada producto en el hash table
+            if (!alimentos.containsKey(name)) {
+                alimentos.put(name, platillo);
+            }
+        }
+       
+    }
+    
+      public void startTableGastos(JTable table, FileTypes file) {
+        ArrayList<Inventario> platillos = FileManager.readItemsInFile(file);
+        Collections.sort(platillos);
+        String name;
+        double cantidad;
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        for (Inventario platillo : platillos) {
+            
+            name = platillo.getName();
+            cantidad = platillo.getPrice();
+            // Añade cada producto a la lista en pantalla correspondiente
+           
+            model.addRow(new Object[]{name, cantidad});
+            
+            // Guarda cada producto en el hash table
+            if (!alimentos.containsKey(name)) {
+                alimentos.put(name, platillo);
+            }
+        }
+      }
     
     private void startMenu() {
         
@@ -193,7 +242,16 @@ public class MainScreen extends javax.swing.JFrame {
         reciboList = new java.awt.List();
         creditCardRadioBtn = new javax.swing.JRadioButton();
         inventarioPanel = new javax.swing.JPanel();
-        list1 = new java.awt.List();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         MenuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -432,23 +490,98 @@ public class MainScreen extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Ventas", ventasPanel);
 
-        list1.setBackground(new java.awt.Color(204, 204, 204));
+        inventarioPanel.setBackground(new java.awt.Color(0, 0, 0));
+
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Descripción", "Cantidad"
+            }
+        ));
+        jTable1.setRowHeight(32);
+        jScrollPane1.setViewportView(jTable1);
+
+        jButton1.setText("+");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jTable2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Descripción", "Cantidad"
+            }
+        ));
+        jTable2.setRowHeight(32);
+        jScrollPane2.setViewportView(jTable2);
+
+        jLabel7.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel7.setText("Descripción:");
+
+        jLabel8.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel8.setText("Cantidad:");
+
+        jButton2.setText("Agregar Gastos");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout inventarioPanelLayout = new javax.swing.GroupLayout(inventarioPanel);
         inventarioPanel.setLayout(inventarioPanelLayout);
         inventarioPanelLayout.setHorizontalGroup(
             inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inventarioPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 1534, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inventarioPanelLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 912, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(71, 71, 71)
+                        .addGroup(inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel8)
+                                .addComponent(jTextField1)
+                                .addComponent(jTextField2))
+                            .addComponent(jButton2)))
+                    .addGroup(inventarioPanelLayout.createSequentialGroup()
+                        .addGap(390, 390, 390)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         inventarioPanelLayout.setVerticalGroup(
             inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inventarioPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(list1, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addGap(51, 51, 51)
+                .addGroup(inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inventarioPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33))
+                    .addGroup(inventarioPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addGap(0, 74, Short.MAX_VALUE))))
         );
 
         jTabbedPane1.addTab("Inventario", inventarioPanel);
@@ -579,6 +712,40 @@ public class MainScreen extends javax.swing.JFrame {
         new MenuSelector().setVisible(true);
     }//GEN-LAST:event_irMenuSelectorActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        String destiny = jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString();
+        String data = jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString();
+        int num = Integer.parseInt(data)+1;
+        String newData = String.valueOf(num);
+        //FileManager.editFileByName(FileTypes.BEBIDAS, DataTypes.QUANTITY, destiny, newData);
+
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        dtm.setRowCount(0);
+
+        startTable(jTable1, FileTypes.BEBIDAS);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        String desc = jTextField1.getText().toString();
+        String cantidad = jTextField2.getText().toString();
+        String[] arr = new String[2];
+        arr[0] = desc;
+        arr[1] = cantidad;
+        FileManager.addToFile(FileTypes.GASTOS, arr);
+
+        jTextField1.setText("");
+        jTextField2.setText("");
+
+        DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
+        dtm.setRowCount(0);
+
+        startTableGastos(jTable2, FileTypes.GASTOS);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -639,16 +806,25 @@ public class MainScreen extends javax.swing.JFrame {
     private java.awt.List extrasList;
     private javax.swing.JPanel inventarioPanel;
     private javax.swing.JMenuItem irMenuSelector;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private java.awt.List list1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel logo;
     private java.awt.List menusList;
     private java.awt.List reciboList;
