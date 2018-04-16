@@ -127,6 +127,10 @@ public class MainScreen extends javax.swing.JFrame {
     private void loadMenuFromMemory() {
         ArrayList<Object> memory = MemoryFile.getData();
         
+        if (memory == null) {
+            return;
+        }
+        
         for (Object object : memory) {
             
             if (object instanceof Inventario) {
