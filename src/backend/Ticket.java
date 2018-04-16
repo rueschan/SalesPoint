@@ -1,23 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package backend;
 
-import frontend.MainScreen;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-/**
- *
- * @author Rubén Escalante
- */
 public class Ticket {
     
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    private Date date = new Date();
     private Venta venta;
     private boolean tarjeta;
     private String mesero;
@@ -55,7 +39,7 @@ public class Ticket {
     @Override
     public String toString() {
         String salida = "";
-        salida += dateFormat.format(date) + "\r\n";
+        salida += DateManager.getCompleteDate() + "\r\n";
         salida += mesero + "\r\n\r\n";
         salida += venta.toTicketString() + "\r\n";
         String credit;

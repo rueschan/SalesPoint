@@ -8,10 +8,6 @@ package backend;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  *
@@ -21,8 +17,6 @@ public class LogFileMannager {
     
     private static File logger;
     private static String fileName = "log.txt";  
-    private static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    private static Date date = new Date();
     
     public static boolean writeLog(String log) {
         if (isLogFile()) {
@@ -32,7 +26,7 @@ public class LogFileMannager {
             try {
                 fw = new FileWriter(logger, true);
 
-                fw.write(dateFormat.format(date) + " :: " + log + "\r\n");
+                fw.write(DateManager.getCompleteDate() + " :: " + log + "\r\n");
                 fw.close();
                 
                 System.out.println("Log añadido... > " + log);

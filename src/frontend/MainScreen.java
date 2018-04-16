@@ -5,33 +5,21 @@
  */
 package frontend;
 
-import backend.ExcelFile;
 import backend.FileManager;
 import backend.FileTypes;
 import backend.MemoryFile;
-import backend.ReportManager;
 import backend.Inventario;
 import backend.Ticket;
 import backend.Venta;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.List;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.Action;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.FontUIResource;
 
 /**
@@ -45,6 +33,7 @@ public class MainScreen extends javax.swing.JFrame {
     public static HashMap<String, Inventario> alimentos = new HashMap<String, Inventario>();
     public static Venta recibo; 
     public static boolean isCardPayed;
+    public static ArrayList<Inventario> dayMenus = null;
     DefaultListModel model;
     
     
@@ -55,7 +44,20 @@ public class MainScreen extends javax.swing.JFrame {
     public MainScreen() {
         INSTANCE = this;
         initComponents();
+        startUp();
         startUI();
+    }
+    
+    private void startUp() {
+        try {
+            if (!MemoryFile.isMemoryFile()) {
+                // Se muestra la configuración inicial
+                new MenuSelector().setVisible(true);
+                
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
     
     // Inicia las listas en pantalla
@@ -64,13 +66,10 @@ public class MainScreen extends javax.swing.JFrame {
         startList(bebidasList, FileTypes.BEBIDAS);
         startList(antojosList, FileTypes.ANTOJOS);
         startList(extrasList, FileTypes.EXTRAS);
+        startMenu();
+        startWaiters();
         
         recibo = new Venta();
-        model = new DefaultListModel();
-        model.addElement(rellenar());
-        model.addElement(rellenar());
-        model.addElement(rellenar());
-        model.get(0);
     }
     
     public void resetUI() {
@@ -78,7 +77,10 @@ public class MainScreen extends javax.swing.JFrame {
         bebidasList.removeAll();
         antojosList.removeAll();
         extrasList.removeAll();
+        menusList.removeAll();
+        waiterChoose.removeAll();
         
+        alimentos.clear();
         startUI();
     }
     
@@ -99,24 +101,44 @@ public class MainScreen extends javax.swing.JFrame {
         }
     }
     
+    private void startMenu() {
+        
+        loadMenuFromMemory();
+        
+        if (dayMenus == null || dayMenus.size() < 1) {
+            return;
+        }
+        
+        Collections.sort(dayMenus);
+        String name;
+        
+        for (Inventario platillo : dayMenus) {
+            name = platillo.getName();
+            // Añade cada producto a la lista en pantalla correspondiente
+            menusList.add(name);
+            
+            // Guarda cada producto en el hash table
+            if (!alimentos.containsKey(name)) {
+                alimentos.put(name, platillo);
+            }
+        }   
+    }
+    
+    private void loadMenuFromMemory() {
+        ArrayList<Object> memory = MemoryFile.getData();
+        
+        for (Object object : memory) {
+            
+            if (object instanceof Inventario) {
+                dayMenus.add((Inventario)object);
+            }
+            
+        }
+    }
+    
     public void clearRecibo() {
         reciboList.removeAll();
         recibo.cleanVenta();
-    }
-    
-//    public List returnListOfMenu(){
-//        return cartaList;
-//    }
-    
-    public JButton rellenar(){
-      
-            JButton button = new JButton();
-            button.setText("Prueba");
-            return button;
-           
-    }
-    public void addToModel(){
-        model.addElement(rellenar());
     }
     
     public void addRecibo(String key) {
@@ -127,6 +149,13 @@ public class MainScreen extends javax.swing.JFrame {
         recibo.addItem(selected);
         
         reciboList.add(name + ".... $" + String.valueOf(price));
+    }
+    
+    private void startWaiters() {
+        ArrayList<String> meseros = FileManager.readStringsInFile(FileTypes.MESEROS);
+        for (String mesero : meseros) {
+            waiterChoose.add(mesero);
+        }
     }
 
     /**
@@ -165,8 +194,7 @@ public class MainScreen extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         MenuConfiguracion = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        irMenuSelector = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("NullSoft Sale System");
@@ -317,6 +345,7 @@ public class MainScreen extends javax.swing.JFrame {
         });
 
         creditCardRadioBtn.setFont(new java.awt.Font("Quarca Norm Thin", 0, 18)); // NOI18N
+        creditCardRadioBtn.setForeground(new java.awt.Color(204, 204, 204));
         creditCardRadioBtn.setText("Tarjeta de Credito");
         creditCardRadioBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         creditCardRadioBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -365,7 +394,7 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ventasPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(waiterChoose, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -382,7 +411,7 @@ public class MainScreen extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ventasPanelLayout.createSequentialGroup()
                                 .addComponent(extrasList, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)))
+                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(ventasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(ventasPanelLayout.createSequentialGroup()
@@ -444,11 +473,14 @@ public class MainScreen extends javax.swing.JFrame {
             }
         });
         jMenu1.add(MenuConfiguracion);
-        jMenu1.add(jSeparator1);
 
-        jMenuItem2.setMnemonic('s');
-        jMenuItem2.setText("Salir");
-        jMenu1.add(jMenuItem2);
+        irMenuSelector.setText("Elegir menús del día");
+        irMenuSelector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                irMenuSelectorActionPerformed(evt);
+            }
+        });
+        jMenu1.add(irMenuSelector);
 
         MenuBar.add(jMenu1);
 
@@ -492,19 +524,20 @@ public class MainScreen extends javax.swing.JFrame {
         
         String credit;
         if (isCardPayed) {
-            credit = "Yes";
+            credit = "Si";
         } else {
             credit = "No";
         }
         
         int n = JOptionPane.showConfirmDialog(null, recibo.getElements() + 
                 "\nPaga con tarjeta: " + credit + 
-                "\nTotal a pagar: "+recibo.getTotal(),
+                "\nTotal a pagar: " + recibo.getTotal() +
+                "\nMesero: " + waiterChoose.getSelectedItem(),
                 "Cuenta a Pagar", JOptionPane.OK_CANCEL_OPTION);
        
         if (n == JOptionPane.OK_OPTION) {
             // Crear ticket
-            new Ticket(recibo, isCardPayed, "Test").confirmarVenta();
+            new Ticket(recibo, isCardPayed, waiterChoose.getSelectedItem()).confirmarVenta();
             creditCardRadioBtn.setSelected(false);
             clearRecibo();
         }
@@ -536,6 +569,11 @@ public class MainScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         isCardPayed = creditCardRadioBtn.isSelected();
     }//GEN-LAST:event_creditCardRadioBtnActionPerformed
+
+    private void irMenuSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irMenuSelectorActionPerformed
+        // TODO add your handling code here:
+        new MenuSelector().setVisible(true);
+    }//GEN-LAST:event_irMenuSelectorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -575,24 +613,12 @@ public class MainScreen extends javax.swing.JFrame {
                 mainScreen.setPreferredSize(new Dimension(1250, 200));
                 
                 // TEST ZONE
-                ReportManager.createReport("excelTest");
+//                ReportManager.createReport("excelTest");
                 // /.TEST ZONE
                 
                 //startup();
             }
         });
-    }
-    
-    private static void startup() {
-        try {
-            if (!MemoryFile.isMemoryFile()) {
-                // Se muestra la configuración inicial
-                new Config().setVisible(true);
-                
-            }
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -608,6 +634,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JRadioButton creditCardRadioBtn;
     private java.awt.List extrasList;
     private javax.swing.JPanel inventarioPanel;
+    private javax.swing.JMenuItem irMenuSelector;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -616,8 +643,6 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private java.awt.List list1;
     private javax.swing.JLabel logo;

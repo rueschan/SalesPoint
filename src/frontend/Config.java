@@ -5,7 +5,11 @@
  */
 package frontend;
 
+import backend.FileManager;
 import backend.FileTypes;
+import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,6 +22,10 @@ public class Config extends javax.swing.JFrame {
      */
     public Config() {
         initComponents();
+        ArrayList<String> meseros = FileManager.readStringsInFile(FileTypes.MESEROS);
+        for (String mesero : meseros) {
+            waiterList.add(mesero);
+        }
     }
 
     /**
@@ -31,6 +39,7 @@ public class Config extends javax.swing.JFrame {
 
         Head = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         Body = new javax.swing.JPanel();
         TiempoReporte = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -40,12 +49,23 @@ public class Config extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         comboAgregar = new javax.swing.JComboBox<>();
         btnModificar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        waiterTf = new java.awt.TextField();
+        waiterList = new java.awt.List();
+        saveBtn = new java.awt.Button();
+        deleteBtn = new java.awt.Button();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Configuración");
         setLocation(new java.awt.Point(100, 100));
-        setPreferredSize(new java.awt.Dimension(400, 500));
+        setMaximumSize(new java.awt.Dimension(450, 460));
+        setMinimumSize(new java.awt.Dimension(450, 460));
+        setPreferredSize(new java.awt.Dimension(450, 460));
         setResizable(false);
+        setSize(new java.awt.Dimension(450, 460));
 
         Head.setBackground(new java.awt.Color(51, 51, 51));
         Head.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -61,7 +81,7 @@ public class Config extends javax.swing.JFrame {
         HeadLayout.setHorizontalGroup(
             HeadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HeadLayout.createSequentialGroup()
-                .addGap(0, 246, Short.MAX_VALUE)
+                .addGap(0, 296, Short.MAX_VALUE)
                 .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         HeadLayout.setVerticalGroup(
@@ -71,9 +91,12 @@ public class Config extends javax.swing.JFrame {
 
         getContentPane().add(Head, java.awt.BorderLayout.PAGE_START);
 
-        Body.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        Body.setMinimumSize(new java.awt.Dimension(300, 500));
-        Body.setPreferredSize(new java.awt.Dimension(400, 600));
+        jPanel2.setMaximumSize(new java.awt.Dimension(300, 200));
+        jPanel2.setMinimumSize(new java.awt.Dimension(300, 200));
+        jPanel2.setPreferredSize(new java.awt.Dimension(300, 200));
+
+        Body.setMinimumSize(new java.awt.Dimension(300, 100));
+        Body.setPreferredSize(new java.awt.Dimension(400, 100));
 
         TiempoReporte.setMinimumSize(new java.awt.Dimension(300, 27));
         TiempoReporte.setPreferredSize(new java.awt.Dimension(300, 27));
@@ -83,17 +106,11 @@ public class Config extends javax.swing.JFrame {
         jLabel1.setText("Tipo de reportes: ");
         TiempoReporte.add(jLabel1);
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diario", "Semanal", "Mensual" }));
         jComboBox1.setBorder(null);
         jComboBox1.setPreferredSize(new java.awt.Dimension(100, 30));
         jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
         TiempoReporte.add(jComboBox1);
 
         Body.add(TiempoReporte);
@@ -111,12 +128,16 @@ public class Config extends javax.swing.JFrame {
         jLabel2.setToolTipText("Agregar, editar o eliminar las listas de productos. (No para hacer inventario)");
         TiempoReporte1.add(jLabel2);
 
-        comboAgregar.setBackground(new java.awt.Color(255, 255, 255));
         comboAgregar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         comboAgregar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Menú", "Bebidas", "Antojos", "Carta", "Extras" }));
         comboAgregar.setBorder(null);
         comboAgregar.setPreferredSize(new java.awt.Dimension(100, 30));
         jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
+        comboAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboAgregarActionPerformed(evt);
+            }
+        });
         TiempoReporte1.add(comboAgregar);
 
         Body.add(TiempoReporte1);
@@ -130,21 +151,142 @@ public class Config extends javax.swing.JFrame {
         });
         Body.add(btnModificar);
 
-        getContentPane().add(Body, java.awt.BorderLayout.CENTER);
+        jPanel2.add(Body);
+
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel5.setText("Agregar meseros");
+        jPanel2.add(jLabel5);
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Meseros");
+
+        waiterTf.setBackground(new java.awt.Color(204, 204, 204));
+        waiterTf.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        waiterTf.setForeground(new java.awt.Color(102, 102, 102));
+        waiterTf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                waiterTfActionPerformed(evt);
+            }
+        });
+
+        waiterList.setBackground(new java.awt.Color(204, 204, 204));
+        waiterList.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        waiterList.setForeground(new java.awt.Color(102, 102, 102));
+        waiterList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                waiterListActionPerformed(evt);
+            }
+        });
+
+        saveBtn.setBackground(new java.awt.Color(0, 204, 0));
+        saveBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        saveBtn.setLabel("Guardar");
+        saveBtn.setName(""); // NOI18N
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
+
+        deleteBtn.setBackground(new java.awt.Color(204, 0, 0));
+        deleteBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        deleteBtn.setLabel("Eliminar");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Nombre");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(waiterList, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(waiterTf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(saveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                    .addComponent(deleteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(waiterList, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(waiterTf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, 0))
+        );
+
+        jPanel2.add(jPanel1);
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void waiterTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waiterTfActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_waiterTfActionPerformed
+
+    private void waiterListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waiterListActionPerformed
+        // TODO add your handling code here:
+        String selected = waiterList.getSelectedItem();
+        waiterTf.setText(selected);
+    }//GEN-LAST:event_waiterListActionPerformed
+
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        // TODO add your handling code here:
+        String selected = waiterTf.getText();
+        if (selected.isEmpty() || selected.matches(".*\\d+.*")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Ingrese nombre del mesero.");
+            return;
+        }
+        FileManager.addToPlainFile(FileTypes.MESEROS, selected);
+        
+        waiterTf.setText("");
+        waiterList.add(selected);
+        MainScreen.INSTANCE.resetUI();
+    }//GEN-LAST:event_saveBtnActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         String selectedFile = (String) comboAgregar.getSelectedItem();
-        
         openInventoryManager(selectedFile);
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void comboAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAgregarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboAgregarActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        // TODO add your handling code here:
+        String selected = waiterTf.getText();
+        FileManager.deleteStringFromFile(FileTypes.MESEROS, selected);
+        
+        waiterList.remove(selected);
+        MainScreen.INSTANCE.resetUI();
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,11 +330,20 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JPanel TiempoReporte1;
     private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<String> comboAgregar;
+    private java.awt.Button deleteBtn;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel logo;
+    private java.awt.Button saveBtn;
+    private java.awt.List waiterList;
+    private java.awt.TextField waiterTf;
     // End of variables declaration//GEN-END:variables
 
     private void openInventoryManager(String selectedFile) {

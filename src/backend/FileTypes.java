@@ -5,15 +5,12 @@
  */
 package backend;
 
-/**
- *
- * @author Rubén Escalante
- */
 public enum FileTypes {
     CARTA,
     BEBIDAS,
     ANTOJOS,
     MENUS,
     EXTRAS,
-    TICKET
+    TICKET,
+    MESEROS
 }
