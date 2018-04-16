@@ -43,19 +43,20 @@ public class Venta {
         }
         System.out.println("Item a remover: '" + cleaned + "'");
         
-        List<String> arr = new ArrayList<String>();    
+        ArrayList<Inventario> arr = new ArrayList<>();    
         Iterator<Inventario> iter = venta.iterator();
         
         while(iter.hasNext()){
             
             Inventario element  = iter.next();
             
-            if(cleaned.equalsIgnoreCase(element.getName())){
-                arr.add(element.getName());
+            if(!cleaned.equalsIgnoreCase(element.getName())){
+                arr.add(element);
             }
         }
         
-        venta.removeAll(arr);
+        venta.clear();
+        venta.addAll(arr);
     }
     
     public String getElements(){

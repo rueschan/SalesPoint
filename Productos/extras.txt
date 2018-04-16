@@ -1,0 +1,3 @@
+﻿Huevo:5
+Queso:5
+Pollo:20

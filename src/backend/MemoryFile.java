@@ -6,6 +6,7 @@
 package backend;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 public class MemoryFile {
     
-    private static final String PATHNAME = "memory.txt";
+    private static final String PATHNAME = "System" + File.separator + "memory.txt";
     
     // Agregar variables de cantidades a calcular de manera cotidiana
     private static String date;

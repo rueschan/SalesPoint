@@ -12,5 +12,6 @@ public enum FileTypes {
     MENUS,
     EXTRAS,
     TICKET,
-    MESEROS, GASTOS;
+    MESEROS,
+    GASTOS;
 }

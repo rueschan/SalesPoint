@@ -47,7 +47,7 @@ public class MainScreen extends javax.swing.JFrame {
     public MainScreen() {
         INSTANCE = this;
         initComponents();
-        //startUp();
+        startUp();
         startUI();
     }
     
@@ -71,10 +71,11 @@ public class MainScreen extends javax.swing.JFrame {
         startList(bebidasList, FileTypes.BEBIDAS);
         startList(antojosList, FileTypes.ANTOJOS);
         startList(extrasList, FileTypes.EXTRAS);
+        startMenu();
+        startWaiters();
+        
         startTable(jTable1, FileTypes.BEBIDAS);
         startTableGastos(jTable2, FileTypes.GASTOS);
-        //startMenu();
-        //startWaiters();
         
         recibo = new Venta();
     }
@@ -555,9 +556,9 @@ public class MainScreen extends javax.swing.JFrame {
                                 .addComponent(jTextField2))
                             .addComponent(jButton2)))
                     .addGroup(inventarioPanelLayout.createSequentialGroup()
-                        .addGap(390, 390, 390)
+                        .addGap(451, 451, 451)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         inventarioPanelLayout.setVerticalGroup(
             inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -566,9 +567,9 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGroup(inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(inventarioPanelLayout.createSequentialGroup()
                         .addComponent(jScrollPane1)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33))
+                        .addGap(39, 39, 39))
                     .addGroup(inventarioPanelLayout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -581,7 +582,7 @@ public class MainScreen extends javax.swing.JFrame {
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)
-                        .addGap(0, 74, Short.MAX_VALUE))))
+                        .addGap(0, 86, Short.MAX_VALUE))))
         );
 
         jTabbedPane1.addTab("Inventario", inventarioPanel);

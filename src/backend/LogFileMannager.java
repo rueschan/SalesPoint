@@ -16,7 +16,7 @@ import java.io.IOException;
 public class LogFileMannager {
     
     private static File logger;
-    private static String fileName = "log.txt";  
+    private static String fileName = "System" + File.separator + "log.txt";  
     
     public static boolean writeLog(String log) {
         if (isLogFile()) {

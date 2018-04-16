@@ -9,10 +9,11 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -25,10 +26,35 @@ import java.util.logging.Logger;
  */
 public class FileManager {
     
+    private static final String ENCODING = "UTF-8";
+    private static final String READING_ENCODING = "UTF-8";//"windows-1250";
+    
+    private static String getFileName(FileTypes type) {
+        String path;
+        
+        switch (type) {
+            case TICKET:
+                path = "Ventas";
+                break;
+            case GASTOS:
+                path = "Ventas";
+                break;
+            case MESEROS:
+                path = "Personal";
+                break;
+            default:
+                path = "Productos";
+                break;
+        }
+        path += File.separator + type.toString().toLowerCase() + ".txt";
+        
+        return path;
+    }
+    
     // Regresa un arreglo con los nombres de los elementos en el archivo txt correspondiente
     public static ArrayList<String> readStringsInFile(FileTypes fileType) {
         
-        String fileName = fileType.toString().toLowerCase() + ".txt";
+        String fileName = getFileName(fileType);
         File selected = new File(fileName);
         
         ArrayList<String> salida = new ArrayList<>();
@@ -39,8 +65,8 @@ public class FileManager {
             } else {
                 LogFileMannager.writeLog("Acceso a " + fileName + ".");
                 
-//                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "windows-1250"));
-                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.defaultCharset()));
+                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), READING_ENCODING));
+//                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.defaultCharset()));
                 String line = br.readLine();
                 while (line != null) {
                     System.out.println("line >> " + line);
@@ -61,7 +87,7 @@ public class FileManager {
     // Regresa un arreglo con objetos tipo Inventario con los elementos en el archivo txt correspondiente
     public static ArrayList<Inventario> readItemsInFile(FileTypes fileType) {
         
-        String fileName = fileType.toString().toLowerCase() + ".txt";
+        String fileName = getFileName(fileType);
         File selected = new File(fileName);
         
         ArrayList<Inventario> salida = new ArrayList<>();
@@ -73,8 +99,8 @@ public class FileManager {
                 LogFileMannager.writeLog("Acceso a " + fileName + ".");
                 
                 try {
-//                    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "windows-1250"));
-                    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.defaultCharset()));
+                    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), READING_ENCODING));
+//                    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.defaultCharset()));
                     
                     String line = br.readLine();
                     String[] lineItems;
@@ -117,7 +143,7 @@ public class FileManager {
     public static void editFileByInventory(FileTypes fileType, DataTypes dataType, 
             String destiny, Inventario data) {
         
-        String fileName = fileType.toString().toLowerCase() + ".txt";
+        String fileName = getFileName(fileType);
         String tempName = "temp.txt";
 
         File selected = new File(fileName);
@@ -132,12 +158,16 @@ public class FileManager {
         }
         
         BufferedReader br;
-        FileWriter fw;
+        BufferedWriter bw;
         
         try {
             
-            br = new BufferedReader(new FileReader(tempFile));
-            fw = new FileWriter(nuevo);
+//            br = new BufferedReader(new FileReader(tempFile));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(tempName), READING_ENCODING));
+//            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.defaultCharset()));
+            File file = new File(fileName);
+	    bw = new BufferedWriter(new OutputStreamWriter(
+		new FileOutputStream(file.getAbsoluteFile(), true), ENCODING));
             
             String[] components;
             String line = br.readLine();
@@ -156,10 +186,10 @@ public class FileManager {
                     }
                 }
                 
-                fw.write(line + "\r\n");
+                bw.write(line + "\r\n");
                 line = br.readLine();
             }
-            fw.close();
+            bw.close();
             br.close();
             
         } catch (Exception ex) {
@@ -172,7 +202,7 @@ public class FileManager {
     public static void editFileByName(FileTypes fileType, DataTypes dataType, 
             String destiny, String data) {
         
-        String fileName = fileType.toString().toLowerCase() + ".txt";
+        String fileName = getFileName(fileType);
         String tempName = "temp.txt";
 
         File selected = new File(fileName);
@@ -187,13 +217,16 @@ public class FileManager {
         }
         
         BufferedReader br;
-        FileWriter fw;
+        BufferedWriter bw;
         
         try {
-            
-            br = new BufferedReader(new FileReader(tempFile));
+            System.out.println(fileName);
+//            br = new BufferedReader(new FileReader(tempFile));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(tempName), READING_ENCODING));
 //            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.defaultCharset()));
-            fw = new FileWriter(nuevo);
+            File file = new File(fileName);
+	    bw = new BufferedWriter(new OutputStreamWriter(
+		new FileOutputStream(file.getAbsoluteFile(), true), ENCODING));
             
             String[] components;
             String line = br.readLine();
@@ -226,10 +259,10 @@ public class FileManager {
                     }
                 }
                 
-                fw.write(line + "\r\n");
+                bw.write(line + "\r\n");
                 line = br.readLine();
             }
-            fw.close();
+            bw.close();
             br.close();
             
         } catch (Exception ex) {
@@ -243,21 +276,19 @@ public class FileManager {
         
         BufferedWriter bw = null;
         FileWriter fw = null;
-        String fileName = fileType.toString().toLowerCase() + ".txt";
-        
+        String fileName = getFileName(fileType);
         
         try {
             
             String cadena;
             if (fileType == FileTypes.BEBIDAS) {
-                cadena = "\r\n" + data[0] + ":" + data[1] + ":" + data[2];
+                cadena = "\r\n" + data[0] + ":" + data[1] + ":" + 0;
             } else {
                 cadena = "\r\n" + data[0] + ":" + data[1];
             }
             File file = new File(fileName);
-          
-	    fw = new FileWriter(file.getAbsoluteFile(), true);
-	    bw = new BufferedWriter(fw);
+	    bw = new BufferedWriter(new OutputStreamWriter(
+		new FileOutputStream(file.getAbsoluteFile(), true), ENCODING));
             
             bw.write(cadena);
         
@@ -290,18 +321,16 @@ public class FileManager {
         
         BufferedWriter bw = null;
         FileWriter fw = null;
-        String fileName = fileType.toString().toLowerCase() + ".txt";
+        String fileName = getFileName(fileType);
         
         
         try {
             
-            String cadena;
             File file = new File(fileName);
-          
-	    fw = new FileWriter(file.getAbsoluteFile(), true);
-	    bw = new BufferedWriter(fw);
+	    bw = new BufferedWriter(new OutputStreamWriter(
+		new FileOutputStream(file.getAbsoluteFile(), true), ENCODING));
             
-            bw.write(data);
+            bw.write("\r\n" + data);
         
             LogFileMannager.writeLog("Se añadió texto a " + fileType.toString());
 
@@ -329,7 +358,7 @@ public class FileManager {
     
     public static void deleteFromFileByInventario(FileTypes fileType, Inventario data) {
         
-        String fileName = fileType.toString().toLowerCase() + ".txt";
+        String fileName = getFileName(fileType);
         String tempName = "temp.txt";
 
         File selected = new File(fileName);
@@ -344,12 +373,16 @@ public class FileManager {
         }
         
         BufferedReader br;
-        FileWriter fw;
+        BufferedWriter bw;
         
         try {
             
-            br = new BufferedReader(new FileReader(tempFile));
-            fw = new FileWriter(nuevo);
+//            br = new BufferedReader(new FileReader(tempFile));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(tempName), READING_ENCODING));
+//            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.defaultCharset()));
+            File file = new File(fileName);
+	    bw = new BufferedWriter(new OutputStreamWriter(
+		new FileOutputStream(file.getAbsoluteFile(), true), ENCODING));
             
             String[] components;
             String line = br.readLine();
@@ -357,12 +390,12 @@ public class FileManager {
                 components = line.split(":");
                 
                 if (!components[0].equals(data.getName())) {
-                    fw.write(line + "\r\n");
+                    bw.write(line + "\r\n");
                 }
                 
                 line = br.readLine();
             }
-            fw.close();
+            bw.close();
             br.close();
             
         } catch (Exception ex) {
@@ -374,7 +407,7 @@ public class FileManager {
     
     public static void deleteFromFileByName(FileTypes fileType, String data) {
         
-        String fileName = fileType.toString().toLowerCase() + ".txt";
+        String fileName = getFileName(fileType);
         String tempName = "temp.txt";
 
         File selected = new File(fileName);
@@ -389,12 +422,16 @@ public class FileManager {
         }
         
         BufferedReader br;
-        FileWriter fw;
+        BufferedWriter bw;
         
         try {
             
-            br = new BufferedReader(new FileReader(tempFile));
-            fw = new FileWriter(nuevo);
+//            br = new BufferedReader(new FileReader(tempFile));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(tempName), READING_ENCODING));
+//            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.defaultCharset()));
+            File file = new File(fileName);
+	    bw = new BufferedWriter(new OutputStreamWriter(
+		new FileOutputStream(file.getAbsoluteFile(), true), ENCODING));
             
             String[] components;
             String line = br.readLine();
@@ -402,12 +439,12 @@ public class FileManager {
                 components = line.split(":");
                 
                 if (!components[0].equals(data)) {
-                    fw.write(line + "\r\n");
+                    bw.write(line + "\r\n");
                 }
                 
                 line = br.readLine();
             }
-            fw.close();
+            bw.close();
             br.close();
             
         } catch (Exception ex) {
@@ -419,7 +456,7 @@ public class FileManager {
     
     public static void deleteStringFromFile(FileTypes fileType, String data) {
         
-        String fileName = fileType.toString().toLowerCase() + ".txt";
+        String fileName = getFileName(fileType);
         String tempName = "temp.txt";
 
         File selected = new File(fileName);
@@ -434,23 +471,27 @@ public class FileManager {
         }
         
         BufferedReader br;
-        FileWriter fw;
+        BufferedWriter bw;
         
         try {
             
-            br = new BufferedReader(new FileReader(tempFile));
-            fw = new FileWriter(nuevo);
+//            br = new BufferedReader(new FileReader(tempFile));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(tempName), READING_ENCODING));
+//            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.defaultCharset()));
+            File file = new File(fileName);
+	    bw = new BufferedWriter(new OutputStreamWriter(
+		new FileOutputStream(file.getAbsoluteFile(), true), ENCODING));
             
             String line = br.readLine();
             while (line != null) {
                 
                 if (!line.equals(data)) {
-                    fw.write(line + "\r\n");
+                    bw.write(line + "\r\n");
                 }
                 
                 line = br.readLine();
             }
-            fw.close();
+            bw.close();
             br.close();
             
         } catch (Exception ex) {
