@@ -714,16 +714,18 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
+        int row = jTable1.getSelectedRow();
         String destiny = jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString();
         String data = jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString();
-        int num = Integer.parseInt(data)+1;
+        int num = Integer.parseInt(data) + 1;
         String newData = String.valueOf(num);
-        //FileManager.editFileByName(FileTypes.BEBIDAS, DataTypes.QUANTITY, destiny, newData);
+        FileManager.editFileByName(FileTypes.BEBIDAS, DataTypes.QUANTITY, destiny, newData);
 
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         dtm.setRowCount(0);
 
         startTable(jTable1, FileTypes.BEBIDAS);
+        jTable1.setRowSelectionInterval(row, row);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 

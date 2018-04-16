@@ -73,8 +73,8 @@ public class FileManager {
                 LogFileMannager.writeLog("Acceso a " + fileName + ".");
                 
                 try {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "windows-1250"));
-//                    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.defaultCharset()));
+//                    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "windows-1250"));
+                    BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.defaultCharset()));
                     
                     String line = br.readLine();
                     String[] lineItems;
@@ -156,7 +156,7 @@ public class FileManager {
                     }
                 }
                 
-                fw.write(line + "\n");
+                fw.write(line + "\r\n");
                 line = br.readLine();
             }
             fw.close();
@@ -192,6 +192,7 @@ public class FileManager {
         try {
             
             br = new BufferedReader(new FileReader(tempFile));
+//            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.defaultCharset()));
             fw = new FileWriter(nuevo);
             
             String[] components;
@@ -225,7 +226,7 @@ public class FileManager {
                     }
                 }
                 
-                fw.write(line + "\n");
+                fw.write(line + "\r\n");
                 line = br.readLine();
             }
             fw.close();

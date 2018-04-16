@@ -1,4 +1,4 @@
-Agua de sabor (16oz):12:0
+ï»¿Agua de sabor (16oz):12:0
 Agua de botella:15:0
 Refrescos:15:0
 Jugo natural (16oz):15:0
@@ -6,7 +6,7 @@ Jugo natural (1 Lt):30:0
 Licuado grande (1 Lt):25:0
 Licuado chico (16oz):15:0
 Soda italiana:25:0
-Té:12:0
-Café americano:12:0
+TÃ©:12:0
+CafÃ© americano:12:0
 Jarra agua chica:20:0
 Jarra agua grande:30:0
