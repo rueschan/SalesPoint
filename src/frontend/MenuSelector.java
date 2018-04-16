@@ -67,6 +67,7 @@ public class MenuSelector extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Seleccion de menús");
+        setAlwaysOnTop(true);
         setMinimumSize(new java.awt.Dimension(485, 516));
         setPreferredSize(new java.awt.Dimension(485, 516));
         setResizable(false);

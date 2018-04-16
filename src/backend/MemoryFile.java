@@ -49,12 +49,18 @@ public class MemoryFile {
         // Se cambia segun los valores que existan
         total = 0.0;
         date = "<Not defined>";
-        memoryData.clear();
+        if (memoryData != null) {
+            memoryData.clear();
+        } else {
+            memoryData = new ArrayList<>();
+        }
         
-        save();
     }
     
     public static ArrayList<Object> getData() {
+        if (memoryData.size() <= 2) {
+            return null;
+        }
         ArrayList<Object> salida = new ArrayList<>(memoryData.size() - 2);
         System.out.println(memoryData.size());
         for (int i = 2; i < memoryData.size() - 2; i++) {
@@ -101,21 +107,28 @@ public class MemoryFile {
                 Inventario nuevo = (Inventario)data;
                 salida += nuevo.getName();
                 
+            } else if (data instanceof Double) {
+                salida += total.toString();
             }
             salida += ",";
         }
+        
         return salida;
         
     }
     
     public static void load() {
         resetMemoryData();
+        FileReader fr;
         BufferedReader br;
         
         try {
-            br = new BufferedReader(new FileReader(PATHNAME));
+            fr = new FileReader(PATHNAME);
+            br = new BufferedReader(fr);
+            String line = br.readLine();
             
-            assignValues(br.readLine());
+            assignValues(line);
+            fr.close();
             
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -142,10 +155,13 @@ public class MemoryFile {
         try {
             FileReader fr = new FileReader(PATHNAME);
             BufferedReader br = new BufferedReader(fr);
-            if (br.readLine() != null && br.readLine().contains(",")) {
-                String date = br.readLine().split(",")[DATE_ID];
+            String line = br.readLine();
+            if (line != null && line.contains(",")) {
+                String date = line.split(",")[DATE_ID];
                 
                 if (date.equals(DateManager.getDay())) {
+                    br.close();
+                    fr.close();
                     load();
                     return true;
                 } else {
@@ -159,9 +175,8 @@ public class MemoryFile {
             return false;
         
         } catch (FileNotFoundException e) {
-            FileWriter fw = new FileWriter(PATHNAME);
-            fw.append(DateManager.getDay() + ",");
-            fw.close();
+            startMemoryData();
+            save();
             
             return false;
         }

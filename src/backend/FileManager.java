@@ -9,14 +9,12 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -116,7 +114,7 @@ public class FileManager {
         return salida;
     }
     
-    public static void editFileByName(FileTypes fileType, DataTypes dataType, 
+    public static void editFileByInventory(FileTypes fileType, DataTypes dataType, 
             String destiny, Inventario data) {
         
         String fileName = fileType.toString().toLowerCase() + ".txt";
@@ -152,6 +150,75 @@ public class FileManager {
                 
                     try {
                         components[2] = String.valueOf(data.getQuantity());
+                        line = components[0] + ":" + components[1] + ":" + components[2];
+                    } catch (IndexOutOfBoundsException exception) {
+                        line = components[0] + ":" + components[1];
+                    }
+                }
+                
+                fw.write(line + "\n");
+                line = br.readLine();
+            }
+            fw.close();
+            br.close();
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        tempFile.delete();
+    }
+    
+    public static void editFileByName(FileTypes fileType, DataTypes dataType, 
+            String destiny, String data) {
+        
+        String fileName = fileType.toString().toLowerCase() + ".txt";
+        String tempName = "temp.txt";
+
+        File selected = new File(fileName);
+        selected.renameTo(new File(tempName));
+        File tempFile = new File(tempName);
+
+        File nuevo = new File(fileName);
+        try {
+            nuevo.createNewFile();
+        } catch (IOException ex) {
+            LogFileMannager.writeLog(ex.getLocalizedMessage());
+        }
+        
+        BufferedReader br;
+        FileWriter fw;
+        
+        try {
+            
+            br = new BufferedReader(new FileReader(tempFile));
+            fw = new FileWriter(nuevo);
+            
+            String[] components;
+            String line = br.readLine();
+            while (line != null) {
+                components = line.split(":");
+                
+                if (components[0].equals(destiny)) {
+                    
+                    switch (dataType){
+                        case NAME:
+                            components[0] = data;
+                            break;
+                        case PRICE:
+                            components[1] = data;
+                        case QUANTITY:
+                            try {
+                                components[2] = data;
+                            } catch (IndexOutOfBoundsException exception) {
+                                LogFileMannager.writeLog("Failed to insert " + data
+                                        + " of type " + dataType.toString()
+                                        + "into " + components[0]);
+                            }
+                            break;
+                    }
+                
+                    try {
                         line = components[0] + ":" + components[1] + ":" + components[2];
                     } catch (IndexOutOfBoundsException exception) {
                         line = components[0] + ":" + components[1];
