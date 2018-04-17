@@ -8,7 +8,6 @@ package backend;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author Rubén Escalante
@@ -85,6 +84,21 @@ public class Venta {
     public int size(){
         return venta.size();
         
+    }
+    
+    public void updateInventory() {
+        Iterator<Inventario> iter = venta.iterator();
+        
+        while (iter.hasNext()) {
+            Inventario next = iter.next();
+            
+            if (next.getQuantity() != null) {
+                next.setQuantity(next.getQuantity() - 1);
+            }
+            
+        }
+        
+        FileManager.updateFile(FileTypes.BEBIDAS, venta);
     }
 
     @Override

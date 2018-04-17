@@ -140,7 +140,7 @@ public class FileManager {
         return salida;
     }
     
-    public static void editFileByInventory(FileTypes fileType, DataTypes dataType, 
+    public static void editFileByInventory(FileTypes fileType, 
             String destiny, Inventario data) {
         
         String fileName = getFileName(fileType);
@@ -489,6 +489,69 @@ public class FileManager {
                     bw.write(line + "\r\n");
                 }
                 
+                line = br.readLine();
+            }
+            bw.close();
+            br.close();
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        tempFile.delete();
+    }
+    
+    public static void updateFile(FileTypes fileType, ArrayList<Inventario> data) {
+        
+        String fileName = getFileName(fileType);
+        String tempName = "temp.txt";
+
+        File selected = new File(fileName);
+        selected.renameTo(new File(tempName));
+        File tempFile = new File(tempName);
+
+        File nuevo = new File(fileName);
+        try {
+            nuevo.createNewFile();
+        } catch (IOException ex) {
+            LogFileMannager.writeLog(ex.getLocalizedMessage());
+        }
+        
+        BufferedReader br;
+        BufferedWriter bw;
+        
+        try {
+            
+//            br = new BufferedReader(new FileReader(tempFile));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(tempName), READING_ENCODING));
+//            br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.defaultCharset()));
+            File file = new File(fileName);
+	    bw = new BufferedWriter(new OutputStreamWriter(
+		new FileOutputStream(file.getAbsoluteFile(), true), ENCODING));
+            
+            String[] components;
+            String line = br.readLine();
+            while (line != null) {
+                components = line.split(":");
+                
+                for (Inventario element : data) {
+                    
+                    if (components[0].equals(element.getName())) {
+                        components[1] = String.valueOf(element.getPrice());
+
+                        try {
+                            components[2] = String.valueOf(element.getQuantity());
+                            line = components[0] + ":" + components[1] + ":" + components[2];
+                        } catch (IndexOutOfBoundsException exception) {
+                            line = components[0] + ":" + components[1];
+                        }
+                        data.remove(element);
+                        break;
+                    }
+                    
+                }
+                
+                bw.write(line + "\r\n");
                 line = br.readLine();
             }
             bw.close();

@@ -41,6 +41,47 @@ public class MenuSelector extends javax.swing.JFrame {
             
             // Añade cada producto a la lista en pantalla correspondiente
             listField.add(name);
+            System.out.println("----" + name);
+        }
+    }
+    
+    private void agregarMenu(String menu) {
+        
+        String[] listElements = selectedList.getItems();
+        for (String listElement : listElements) {
+            if (menu.equals(listElement)) {
+                return;
+            }
+        }
+        
+        Inventario selected = null;
+        for (Inventario element : menus) {
+            System.out.println(">>>>>" + menu);
+            if (menu.compareTo(element.getName()) == 0) {
+                selected = element;
+                break;
+            }
+        }
+        
+        if (selected != null) {
+            seleccionados.add(selected);
+            selectedList.add(selected.getName());
+        }
+    }
+    
+    private void eliminarMenu(String menu) {
+        int index = 0;
+            
+        for (Inventario element : seleccionados) {
+            if (menu.compareTo(element.getName()) == 0) {
+                break;
+            }
+            index++;
+        }
+
+        if (index < seleccionados.size()) {
+            seleccionados.remove(index);
+            selectedList.remove(menu);
         }
     }
 
@@ -114,6 +155,11 @@ public class MenuSelector extends javax.swing.JFrame {
         removeBtn.setFont(new java.awt.Font("Quarca Ext Light", 1, 24)); // NOI18N
         removeBtn.setText("<");
         removeBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        removeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeBtnActionPerformed(evt);
+            }
+        });
         Body.add(removeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 220, 40, 40));
 
         addBtn.setFont(new java.awt.Font("Quarca Ext Light", 1, 24)); // NOI18N
@@ -167,62 +213,22 @@ public class MenuSelector extends javax.swing.JFrame {
     private void existantListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_existantListActionPerformed
         // TODO add your handling code here:
         String menu = existantList.getSelectedItem();
-        Inventario selected = null;
-        
-        for (Inventario element : menus) {
-            if (menu.compareTo(element.getName()) == 0) {
-                selected = element;
-                break;
-            }
-        }
-        
-        if (selected != null) {
-            seleccionados.add(selected);
-            selectedList.add(selected.getName());
-        }
+        agregarMenu(menu);
     }//GEN-LAST:event_existantListActionPerformed
 
     private void selectedListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectedListActionPerformed
         // TODO add your handling code here:
-        String[] menu = selectedList.getSelectedItems();
-        int index;
+        String menu = selectedList.getSelectedItem();
+        eliminarMenu(menu);
         
-        for (int i = 0; i < menu.length; i++) {
-            index = 0;
-            
-            for (Inventario element : seleccionados) {
-                if (menu[i].compareTo(element.getName()) == 0) {
-                    break;
-                }
-                index++;
-            }
-
-            if (index < seleccionados.size()) {
-                seleccionados.remove(index);
-                selectedList.remove(menu[i]);
-            }
-        }
     }//GEN-LAST:event_selectedListActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
         String[] menu = existantList.getSelectedItems();
-        Inventario selected;
         
         for (int i = 0; i < menu.length; i++) {
-            selected = null;
-            
-            for (Inventario element : menus) {
-                if (menu[i].compareTo(element.getName()) == 0) {
-                    selected = element;
-                    break;
-                }
-            }
-            
-            if (selected != null) {
-                seleccionados.add(selected);
-                selectedList.add(selected.getName());
-            }
+            agregarMenu(menu[i]);
         }
     }//GEN-LAST:event_addBtnActionPerformed
 
@@ -239,6 +245,15 @@ public class MenuSelector extends javax.swing.JFrame {
         this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_acceptBtnActionPerformed
+
+    private void removeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBtnActionPerformed
+        // TODO add your handling code here:
+        String[] menu = selectedList.getSelectedItems();
+        
+        for (int i = 0; i < menu.length; i++) {
+            eliminarMenu(menu[i]);
+        }
+    }//GEN-LAST:event_removeBtnActionPerformed
 
     /**
      * @param args the command line arguments

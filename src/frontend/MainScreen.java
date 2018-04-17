@@ -88,6 +88,9 @@ public class MainScreen extends javax.swing.JFrame {
         menusList.removeAll();
         waiterChoose.removeAll();
         
+        resetTable(jTable1);
+        resetTable(jTable2);
+        
         alimentos.clear();
         startUI();
     }
@@ -126,11 +129,15 @@ public class MainScreen extends javax.swing.JFrame {
             if (!alimentos.containsKey(name)) {
                 alimentos.put(name, platillo);
             }
-        }
-       
+        }  
     }
     
-      public void startTableGastos(JTable table, FileTypes file) {
+    private void resetTable(JTable table) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+    }
+    
+    public void startTableGastos(JTable table, FileTypes file) {
         ArrayList<Inventario> platillos = FileManager.readItemsInFile(file);
         Collections.sort(platillos);
         String name;
@@ -245,14 +252,14 @@ public class MainScreen extends javax.swing.JFrame {
         inventarioPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        addInventary = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        addGastos = new javax.swing.JButton();
         MenuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -491,7 +498,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Ventas", ventasPanel);
 
-        inventarioPanel.setBackground(new java.awt.Color(0, 0, 0));
+        inventarioPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -505,10 +512,13 @@ public class MainScreen extends javax.swing.JFrame {
         jTable1.setRowHeight(32);
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("+");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        addInventary.setBackground(new java.awt.Color(0, 204, 0));
+        addInventary.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        addInventary.setForeground(new java.awt.Color(102, 102, 102));
+        addInventary.setText("+");
+        addInventary.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                addInventaryActionPerformed(evt);
             }
         });
 
@@ -530,10 +540,13 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(240, 240, 240));
         jLabel8.setText("Cantidad:");
 
-        jButton2.setText("Agregar Gastos");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        addGastos.setBackground(new java.awt.Color(0, 204, 0));
+        addGastos.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        addGastos.setForeground(new java.awt.Color(102, 102, 102));
+        addGastos.setText("Agregar Gastos");
+        addGastos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                addGastosActionPerformed(evt);
             }
         });
 
@@ -545,19 +558,18 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGroup(inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(inventarioPanelLayout.createSequentialGroup()
                         .addGap(54, 54, 54)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 912, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(71, 71, 71)
-                        .addGroup(inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
-                                .addComponent(jLabel7)
-                                .addComponent(jLabel8)
-                                .addComponent(jTextField1)
-                                .addComponent(jTextField2))
-                            .addComponent(jButton2)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 912, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(inventarioPanelLayout.createSequentialGroup()
-                        .addGap(451, 451, 451)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(407, 407, 407)
+                        .addComponent(addInventary, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(71, 71, 71)
+                .addGroup(inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8)
+                    .addComponent(jTextField1)
+                    .addComponent(jTextField2)
+                    .addComponent(addGastos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         inventarioPanelLayout.setVerticalGroup(
@@ -566,23 +578,21 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGap(51, 51, 51)
                 .addGroup(inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(inventarioPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
+                        .addComponent(jScrollPane2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39))
-                    .addGroup(inventarioPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addGap(0, 86, Short.MAX_VALUE))))
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(addInventary, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                    .addComponent(addGastos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
 
         jTabbedPane1.addTab("Inventario", inventarioPanel);
@@ -677,7 +687,9 @@ public class MainScreen extends javax.swing.JFrame {
             // Crear ticket
             new Ticket(recibo, isCardPayed, waiterChoose.getSelectedItem()).confirmarVenta();
             creditCardRadioBtn.setSelected(false);
+            recibo.updateInventory();
             clearRecibo();
+            resetUI();
         }
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
@@ -713,13 +725,18 @@ public class MainScreen extends javax.swing.JFrame {
         new MenuSelector().setVisible(true);
     }//GEN-LAST:event_irMenuSelectorActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void addInventaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addInventaryActionPerformed
 
         int row = jTable1.getSelectedRow();
         String destiny = jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString();
         String data = jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString();
         int num = Integer.parseInt(data) + 1;
         String newData = String.valueOf(num);
+        
+        Inventario modificable = alimentos.get(destiny);
+        modificable.setQuantity(num);
+        alimentos.put(destiny, modificable);
+        
         FileManager.editFileByName(FileTypes.BEBIDAS, DataTypes.QUANTITY, destiny, newData);
 
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
@@ -728,9 +745,9 @@ public class MainScreen extends javax.swing.JFrame {
         startTable(jTable1, FileTypes.BEBIDAS);
         jTable1.setRowSelectionInterval(row, row);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_addInventaryActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void addGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addGastosActionPerformed
 
         String desc = jTextField1.getText().toString();
         String cantidad = jTextField2.getText().toString();
@@ -747,7 +764,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         startTableGastos(jTable2, FileTypes.GASTOS);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_addGastosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -800,6 +817,8 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel Head;
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JMenuItem MenuConfiguracion;
+    private javax.swing.JButton addGastos;
+    private javax.swing.JButton addInventary;
     private java.awt.List antojosList;
     private java.awt.List bebidasList;
     private java.awt.Button btnCancelar;
@@ -809,8 +828,6 @@ public class MainScreen extends javax.swing.JFrame {
     private java.awt.List extrasList;
     private javax.swing.JPanel inventarioPanel;
     private javax.swing.JMenuItem irMenuSelector;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
