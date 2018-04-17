@@ -28,6 +28,7 @@ public class MemoryFile {
     private static ArrayList<Object> memoryData;
     public static final int DATE_ID = 0;
     public static final int TOTAL_ID = 1;
+    public static final int MENU_LIST_ID = 2;
 
     public static void addMemoryData(Object data) {
         memoryData.add(data);
@@ -58,15 +59,26 @@ public class MemoryFile {
         
     }
     
-    public static ArrayList<Object> getData() {
-        if (memoryData.size() <= 2) {
+    public static ArrayList<Inventario> getData() {
+        if (memoryData.size() <= MENU_LIST_ID) {
             return null;
         }
-        ArrayList<Object> salida = new ArrayList<>(memoryData.size() - 2);
-        System.out.println(memoryData.size());
-        for (int i = 2; i < memoryData.size() - 2; i++) {
-            salida.add(memoryData.get(i));
+        ArrayList<Inventario> salida = new ArrayList<>(memoryData.size() - 2);
+        String data;
+        String raw = "";
+        for (int i = MENU_LIST_ID; i < memoryData.size(); i++) {
+            data = (String) memoryData.get(i);
+            
+            for (FileTypes type : FileTypes.values()) {
+                raw = FileManager.searchInFile(type, data);
+                if (!raw.isEmpty()) {
+                    break;
+                }
+            }
+            
+            salida.add(Inventario.convertFromString(raw));
         }
+        System.out.println("xxxxxxxx" + salida.toString());
         return salida;
     }
     
@@ -82,11 +94,11 @@ public class MemoryFile {
         return date;
     }
     
-    public static void save() {
+    public static void save(boolean isNew) {
         FileWriter fw;
         
         try {
-            fw = new FileWriter(PATHNAME);
+            fw = new FileWriter(PATHNAME, !isNew);
             
             String registro = buildRegister();
             fw.write(registro);
@@ -140,16 +152,17 @@ public class MemoryFile {
         if (!registro.contains(",")) {
             return;
         }
-        String[] valores = registro.split(",");
-        for (int i = 0; i < valores.length; i++) {
-            memoryData.add(valores[i]);
-        }
         
-        // Se cambia segun los valores que existan
+        String[] valores = registro.split(",");
+        
         date = valores[DATE_ID];
         memoryData.add(DATE_ID, date);
         total = Double.valueOf(valores[TOTAL_ID]);
         memoryData.add(TOTAL_ID, total);
+        
+        for (int i = MENU_LIST_ID; i < valores.length; i++) {
+            memoryData.add(valores[i]);
+        }
     }
     
     public static boolean isMemoryFile() throws IOException {
@@ -167,17 +180,17 @@ public class MemoryFile {
                     return true;
                 } else {
                     startMemoryData();
-                    save();
+                    save(true);
                 }
             } else {
                 startMemoryData();
-                save();
+                save(true);
             }
             return false;
         
         } catch (FileNotFoundException e) {
             startMemoryData();
-            save();
+            save(true);
             
             return false;
         }

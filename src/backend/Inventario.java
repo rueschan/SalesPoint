@@ -19,6 +19,18 @@ public class Inventario implements Comparable<Inventario>{
     private Double price;
     private Integer quantity;
     
+    public static Inventario convertFromString(String raw) {
+        String[] parts = raw.split(":");
+        
+        Inventario salida;
+        if (parts.length < 3) {
+            salida = new Inventario(parts[0], Double.valueOf(parts[1]));
+        } else {
+            salida = new Inventario(parts[0], Double.valueOf(parts[1]), Integer.valueOf(parts[2]));
+        }
+        return salida;
+    }
+    
     public Inventario(String name, Double price) {
         this.name = name;
         this.price = price;

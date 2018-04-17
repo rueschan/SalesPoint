@@ -159,6 +159,7 @@ public class MainScreen extends javax.swing.JFrame {
       }
     
     private void startMenu() {
+        dayMenus = new ArrayList<>();
         
         loadMenuFromMemory();
         
@@ -182,18 +183,15 @@ public class MainScreen extends javax.swing.JFrame {
     }
     
     private void loadMenuFromMemory() {
-        ArrayList<Object> memory = MemoryFile.getData();
+        ArrayList<Inventario> memory = MemoryFile.getData();
         
         if (memory == null) {
             return;
         }
         
-        for (Object object : memory) {
-            
-            if (object instanceof Inventario) {
-                dayMenus.add((Inventario)object);
-            }
-            
+        for (Inventario object : memory) {
+            System.out.println(">>>>>>>>>>" + object + " # " + memory.size());
+            dayMenus.add(object);
         }
     }
     

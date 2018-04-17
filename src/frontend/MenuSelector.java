@@ -238,7 +238,7 @@ public class MenuSelector extends javax.swing.JFrame {
         for (Inventario seleccionado : seleccionados) {
             MemoryFile.addMemoryData(seleccionado);
         }
-        MemoryFile.save();
+        MemoryFile.save(false);
         
         MainScreen.dayMenus = seleccionados;
         MainScreen.INSTANCE.resetUI();

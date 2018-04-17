@@ -564,4 +564,39 @@ public class FileManager {
         tempFile.delete();
     }
     
+    public static String searchInFile(FileTypes fileType, String searchable) {
+        String fileName = getFileName(fileType);
+        File selected = new File(fileName);
+        
+        String salida = "";
+        
+        try {
+            if (selected.createNewFile()) {
+                LogFileMannager.writeLog("Archivo " + fileName + " creado con exito.");
+            } else {
+                LogFileMannager.writeLog("Acceso a " + fileName + ".");
+                
+                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), READING_ENCODING));
+//                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.defaultCharset()));
+                String line = br.readLine();
+                while (line != null) {
+                    
+                    if (line.contains(searchable)) {
+                        salida = line;
+                        LogFileMannager.writeLog("Linea leída de " + fileName + 
+                        ": " + salida.toString());
+                        br.close();
+                        return salida;
+                    }
+                    
+                    line = br.readLine();
+                }
+                br.close();
+            }
+        } catch (Exception e) {
+            LogFileMannager.writeLog(e.getMessage());
+        }
+        return salida;
+    }
+    
 }
