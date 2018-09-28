@@ -56,10 +56,18 @@ public class MemoryFile {
         } else {
             memoryData = new ArrayList<>();
         }
-        
+    }
+    
+    public static void clearMenuFromMemoryData() {
+        String tempDate = date;
+        Double tempTotal = total;
+        memoryData.clear();
+        memoryData.add(tempDate);
+        memoryData.add(tempTotal);
     }
     
     public static ArrayList<Inventario> getData() {
+        System.out.println("xxxxxxxxxxxx" + memoryData.size() + " " + MENU_LIST_ID + " " + memoryData);
         if (memoryData.size() <= MENU_LIST_ID) {
             return null;
         }
@@ -67,7 +75,8 @@ public class MemoryFile {
         String data;
         String raw = "";
         for (int i = MENU_LIST_ID; i < memoryData.size(); i++) {
-            data = (String) memoryData.get(i);
+            Inventario temp = (Inventario) memoryData.get(i);
+            data = temp.getName();
             
             for (FileTypes type : FileTypes.values()) {
                 raw = FileManager.searchInFile(type, data);
@@ -78,7 +87,6 @@ public class MemoryFile {
             
             salida.add(Inventario.convertFromString(raw));
         }
-        System.out.println("xxxxxxxx" + salida.toString());
         return salida;
     }
     
@@ -161,7 +169,15 @@ public class MemoryFile {
         memoryData.add(TOTAL_ID, total);
         
         for (int i = MENU_LIST_ID; i < valores.length; i++) {
-            memoryData.add(valores[i]);
+            String raw = "";
+            for (FileTypes type : FileTypes.values()) {
+                raw = FileManager.searchInFile(type, valores[i]);
+                if (!raw.isEmpty()) {
+                    break;
+                }
+            }
+
+            memoryData.add(Inventario.convertFromString(raw));
         }
     }
     

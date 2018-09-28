@@ -234,11 +234,11 @@ public class MenuSelector extends javax.swing.JFrame {
 
     private void acceptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptBtnActionPerformed
         // TODO add your handling code here:
-        MemoryFile.resetMemoryData();
+        MemoryFile.clearMenuFromMemoryData();
         for (Inventario seleccionado : seleccionados) {
             MemoryFile.addMemoryData(seleccionado);
         }
-        MemoryFile.save(false);
+        MemoryFile.save(true);
         
         MainScreen.dayMenus = seleccionados;
         MainScreen.INSTANCE.resetUI();
